@@ -20,6 +20,40 @@ requirements.txt. Keep `_shared.py` in the same folder as the other scripts.
 | `build_td_docx.py` | a MIS technical sheet PDF | the budget annex as a Greek .docx |
 | `build_charts.py` | the procurement tracker .xlsx | four charts, EN or EL |
 | `build_narrative.py` | the procurement tracker .xlsx | factual sentences, plus a prompt block of proven figures |
+| `compare_techsheets.py` | the three EPIRUSMEDEYE tech sheet .xlsx exports | `techsheet_comparison_report.txt` |
+| `build_techsheet_report.py` | whatever `compare_techsheets.py` computed | the comparison as a .docx |
+
+### The two that answer "how do I turn the export into a report"
+
+`compare_techsheets.py` writes `techsheet_comparison_report.txt`, and
+`build_techsheet_report.py` turns the same computed figures into a .docx. It
+imports the comparison script rather than reading its text output, so no figure
+is ever re-typed or re-parsed — if a number in the document is wrong, the
+script that computed it is wrong, and both are in this folder.
+
+    python compare_techsheets.py          # needs the three .xlsx exports here
+    python build_techsheet_report.py      # writes the .docx
+
+Put these three files in the folder first, exactly as the MIS names them:
+`1.0-interreg_report26375.xlsx`, `1.1-interreg_report96606.xlsx`,
+`2-interreg_report129557.xlsx`.
+
+## ammos/
+
+The AMMOS proposal builders. They read `_shared.py` from the folder above, so
+keep the `ammos/` folder inside this one.
+
+| script | produces |
+|---|---|
+| `build_budget_model.py` | the live budget workbook, with the rule checks as formulas |
+| `build_concept_note.py` | the concept note |
+| `build_wp_blended.py` | the work package structure |
+
+These three need their source documents beside them in `ammos/` and they are
+not in this repository, because they are the programme's files and not mine to
+redistribute: `nextmed_call.txt`, `nextmed_guide.txt` and `mmm_outputs.xlsm`.
+Each script asserts against them before it writes anything, so a missing file
+fails loudly rather than producing a document with an unchecked claim in it.
 
 ## Run
 
