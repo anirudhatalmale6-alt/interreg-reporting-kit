@@ -1,0 +1,29 @@
+# Everything your Interreg scripts need. Install all of it in one command:
+#
+#     python -m pip install -r requirements.txt
+#
+# Run that once per project and you never install modules one at a time again.
+# If a new script needs something new, add the line here, re-run the command,
+# and the project is reproducible on any machine including a new laptop.
+openpyxl>=3.1        # read and write .xlsx  (trackers, MIS exports, Annex 3)
+python-docx>=1.1     # write .docx           (reports, concept notes)
+matplotlib>=3.8      # charts as .png        (the ones in your report)
+
+# ------------------------------------------------------------------ NOT pip
+# read_td.py, diff_td.py and build_td_docx.py read the MIS technical sheet
+# PDFs, and for that they need ONE non-Python tool: pdftotext, which comes
+# from poppler. pip cannot install it.
+#
+#     Windows   download poppler for Windows, unzip it, and add its \bin
+#               folder to PATH. Or, if you have chocolatey:
+#                   choco install poppler
+#     Ubuntu    sudo apt install poppler-utils
+#     macOS     brew install poppler
+#
+# Check it worked by opening a new terminal and running:
+#
+#     pdftotext -v
+#
+# If that prints a version number, all three scripts will run. If it says
+# "not recognised", PATH did not pick up the new folder - close every
+# terminal window and open a fresh one, because PATH is read at start-up.

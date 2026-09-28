@@ -1,0 +1,185 @@
+==============================================================================
+MINOR-MED, MIS 6010952: what changed across 3 approved technical sheet versions
+==============================================================================
+  v1.0   Αρχική           submitted 02/12/2025 03:42  approved 16/02/2026   total 887.786,27
+  v1.1   Επικαιροποίηση   submitted 30/03/2026 11:58  approved 04/05/2026   total 887.786,27
+  v1.2   Επικαιροποίηση   submitted 01/09/2026 03:35  approved 02/09/2026   total 887.786,27
+
+==============================================================================
+VERSION 1.0 (Αρχική, approved 16/02/2026)  ->  VERSION 1.1 (Επικαιροποίηση, approved 04/05/2026)
+==============================================================================
+  report_26346.pdf  ->  report_118212.pdf
+
+  DURATION
+    CHANGED  start: 01/09/2025 -> 13/02/2026
+    CHANGED  end: 31/08/2027 -> 13/02/2028
+
+  TOTAL ELIGIBLE COST
+    no change in the total
+
+  BUDGET PER PARTNER
+    no change in any partner's budget
+
+  BUDGET PER COST CATEGORY
+    no change in any cost category
+
+  BUDGET PER WORK PACKAGE
+    no change in any work package budget
+
+  BUDGET PER PARTNER AND DELIVERABLE
+    no change in any deliverable's budget
+
+  WORK PACKAGE DATES AND TITLES
+    CHANGED  WP1 dates: ('01/09/2025', '31/08/2027') -> ('13/02/2026', '13/02/2028')
+    CHANGED  WP2 dates: ('01/09/2025', '31/08/2027') -> ('13/02/2026', '13/02/2028')
+    CHANGED  WP3 dates: ('01/09/2025', '31/08/2027') -> ('13/02/2026', '13/02/2028')
+    CHANGED  WP4 dates: ('01/03/2026', '31/08/2027') -> ('13/02/2026', '13/02/2028')
+    CHANGED  WP6 dates: ('01/09/2026', '31/08/2027') -> ('13/02/2026', '13/02/2028')
+    no change in work package titles
+
+  INDICATOR TARGETS
+    no change in indicator targets
+
+  LEGAL REPRESENTATIVES
+    REMOVED  ΜΙΝΟΣ ΓΑΡΟΦΑΛΑΚΗΣ
+    ADDED    ΙΩΑΝΝΗΣ ΕΜΙΡΗΣ
+
+  BANK ACCOUNTS (IBAN)
+    ADDED    AL8910111008000000002111001E
+    ADDED    AL29214631030630861018020222
+
+  ATTACHED DOCUMENTS
+    Read REMOVED here with care. The MIS attaches documents to a
+    technical sheet VERSION, not to the operation, so a new version
+    starts with a short list and everything carried by the previous
+    version reads as removed. That is the system's behaviour, not a
+    withdrawal. What is worth checking is the opposite: a document
+    the MA expects to find on the CURRENT version and cannot.
+    REMOVED  ANNEX 7.pdf
+    REMOVED  ANNEX 9.pdf
+    REMOVED  Annex 6 Maturity Sheet RCV.pdf
+    REMOVED  DIAGNOSIS MATURITY SHEET.pdf
+    REMOVED  Documentation for PB4-ATHENA RC.pdf
+    REMOVED  GHFiliates Maturity Sheet.pdf
+    REMOVED  Legal entity RCV.pdf
+    REMOVED  Letter of Intent_Filiates General Hospital.pdf
+    REMOVED  Letter of Intent_ISI.pdf
+    REMOVED  Letter of Intent_Municipality of Foiniki.pdf
+    REMOVED  Letter of Intent_NGO Diagnosis.pdf
+    REMOVED  MoFOINIKI_Annex 6.pdf
+    REMOVED  MoFoiniki Legal Entity.pdf
+    REMOVED  MoU Finiq.pdf
+    REMOVED  Mou RCV HCCF.pdf
+    REMOVED  Offers for equioment PB2.pdf
+    REMOVED  Offers for equipment PB3.pdf
+    REMOVED  Optimisation minutes_MINOR-MED.pdf
+    REMOVED  Participant List_MINOR-MED.pdf
+    REMOVED  STPP_Guidelines_27032025..doc
+    REMOVED  TDP_6010952_id26346_FIN_55.pdf
+    REMOVED  TDP_6010952_id26346_RET_12.pdf
+    REMOVED  TDP_6010952_id26346_RET_70.pdf
+    REMOVED  TDP_6010952_id26346_SUB_62.pdf
+    REMOVED  TDP_6010952_id26346_SUB_81.pdf
+    REMOVED  TDP_6010952_id26346_SUB_92.pdf
+    REMOVED  TDP_6010952_id26346_SUB_94.pdf
+    REMOVED  environmental minor med.pdf
+    REMOVED  maturity minor med.pdf
+    REMOVED  partnenship declaration minormed.pdf
+    ADDED    FIF CORRECTED.pdf
+    ADDED    FIF MINOR MED REGION OF VLORE.pdf
+    ADDED    IDENTIFICATION FORM ngo.pdf
+    ADDED    TDP_6010952_id118212_APPR_47.pdf
+    ADDED    TDP_6010952_id118212_SUB_91.pdf
+    ADDED    Πλάνο Συμβάσεων - Παραδοτέα 23.3.2026.xls
+
+  WHAT THIS MODIFICATION ACTUALLY WAS
+  --------------------------------------------------------------------------
+  NO BUDGET FIGURE MOVED. Not the total, not a partner, not a cost
+  category, not a work package, not a single deliverable. So this
+  modification cannot be described in a report as a budget
+  revision, and Article 3.7 or any absorption target calculated
+  from the previous version still stands unchanged.
+
+  WORK PACKAGES LEFT ON THE OLD CALENDAR
+  --------------------------------------------------------------------------
+  The project period moved from 01/09/2025, 31/08/2027 to 13/02/2026, 13/02/2028,
+  but these work packages kept the dates they had before:
+    WP5 SUSTAINABILITY PLANNING AND FOLLOW-UP        01/09/2026 to 31/08/2027
+  Either that is deliberate and the report should say why, or
+  it is an oversight in the modification and the MA will ask.
+  Decide which before the report is filed, not after.
+  It changed: the implementation period, work package dates or titles, a legal representative, bank account details, the list of attached documents.
+
+==============================================================================
+VERSION 1.1 (Επικαιροποίηση, approved 04/05/2026)  ->  VERSION 1.2 (Επικαιροποίηση, approved 02/09/2026)
+==============================================================================
+  report_118212.pdf  ->  report_140109.pdf
+
+  DURATION
+    no change in the duration
+
+  TOTAL ELIGIBLE COST
+    no change in the total
+
+  BUDGET PER PARTNER
+    no change in any partner's budget
+
+  BUDGET PER COST CATEGORY
+    no change in any cost category
+
+  BUDGET PER WORK PACKAGE
+    no change in any work package budget
+
+  BUDGET PER PARTNER AND DELIVERABLE
+    no change in any deliverable's budget
+
+  WORK PACKAGE DATES AND TITLES
+    no change in work package dates
+    no change in work package titles
+
+  INDICATOR TARGETS
+    no change in indicator targets
+
+  LEGAL REPRESENTATIVES
+    no change in legal representatives
+
+  BANK ACCOUNTS (IBAN)
+    no change in bank accounts
+
+  ATTACHED DOCUMENTS
+    Read REMOVED here with care. The MIS attaches documents to a
+    technical sheet VERSION, not to the operation, so a new version
+    starts with a short list and everything carried by the previous
+    version reads as removed. That is the system's behaviour, not a
+    withdrawal. What is worth checking is the opposite: a document
+    the MA expects to find on the CURRENT version and cannot.
+    REMOVED  FIF CORRECTED.pdf
+    REMOVED  FIF MINOR MED REGION OF VLORE.pdf
+    REMOVED  IDENTIFICATION FORM ngo.pdf
+    REMOVED  TDP_6010952_id118212_APPR_47.pdf
+    REMOVED  TDP_6010952_id118212_SUB_91.pdf
+    REMOVED  Πλάνο Συμβάσεων - Παραδοτέα 23.3.2026.xls
+    ADDED    TDP_6010952_id140109_APPR_40.pdf
+    ADDED    TDP_6010952_id140109_SUB_15.pdf
+    ADDED    fif Minor Med.pdf
+
+  WHAT THIS MODIFICATION ACTUALLY WAS
+  --------------------------------------------------------------------------
+  NO BUDGET FIGURE MOVED. Not the total, not a partner, not a cost
+  category, not a work package, not a single deliverable. So this
+  modification cannot be described in a report as a budget
+  revision, and Article 3.7 or any absorption target calculated
+  from the previous version still stands unchanged.
+  It changed: the list of attached documents.
+
+==============================================================================
+ACROSS ALL VERSIONS
+==============================================================================
+  total eligible cost   887.786,27  ->  887.786,27
+  implementation period 01/09/2025 to 31/08/2027  ->  13/02/2026 to 13/02/2028
+  budget figures moved  0
+
+  THE CURRENT VERSION IS THE ONLY ONE TO REPORT AGAINST
+  v1.2, approved 02/09/2026, total 887.786,27, 13/02/2026 to 13/02/2028.
+  Superseded versions are evidence of the modification history and
+  nothing else. Do not compute a percentage against one of them.

@@ -1,0 +1,108 @@
+HOW TO TURN AN EXPORT INTO A REPORT, IN SEVEN STEPS
+====================================================
+
+Every script I have sent you is the same seven steps in the same order. Once
+you can see the pattern, a new report is an afternoon rather than a week.
+
+
+STEP 1.  PUT THE EXPORT IN data\ AND DO NOT RENAME IT BY HAND
+--------------------------------------------------------------
+Download the tracker or the MIS export into the project's data\ folder. Keep
+the name the system gave it, and add the date you downloaded it:
+
+    data\live_EP_20260924.xlsx
+
+Why: in three months you will need to prove which version of the data a
+number came from. A filename with a date does that for free.
+
+
+STEP 2.  FIND THE COLUMNS BY HEADING, NEVER BY POSITION
+--------------------------------------------------------
+    from _shared import locate
+    C, heads = locate(ws, {"budget": ("THIS deliverable", "Budget ex VAT")})
+
+Why this is not optional: your two trackers hold the same data in DIFFERENT
+columns, because one splits the budget into two columns and the other does
+not. A script that says "column 7 is the budget" reads the right number from
+one file and the WRONG number from the other, with no error. That is the
+single most dangerous kind of bug, because the answer looks fine.
+
+
+STEP 3.  READ THE ROWS INTO A LIST OF DICTS
+--------------------------------------------
+    from _shared import read_tracker
+    rows = read_tracker("data\\live_EP_20260924.xlsx", "EPIRUS-MEDEYE")
+
+Now every row is a dictionary: row["ben"], row["budget"], row["status"].
+Stop thinking in cells and start thinking in records. Everything after this
+step is ordinary Python, not spreadsheet work.
+
+
+STEP 4.  COMPUTE, USING Counter FOR ANYTHING "BY SOMETHING"
+------------------------------------------------------------
+    import collections
+    by_status = collections.Counter()
+    for r in rows:
+        by_status[r["status"]] += r["budget"]
+
+That four-line pattern produces "value by status", "value by partner", "value
+by cost category" and every other table in your report. It is the same four
+lines each time with one word changed.
+
+
+STEP 5.  ASSERT THAT YOUR TOTALS RECONCILE TO THE SOURCE
+---------------------------------------------------------
+    total = sum(r["budget"] for r in rows)
+    assert abs(sum(by_status.values()) - total) < 0.02, "does not reconcile"
+
+This is the step people skip and it is the one that saves you. If your
+breakdown does not add up to the total you read from the file, something is
+wrong and you want to know NOW, not after the Ministry adds it up.
+
+A report that stops with an error is embarrassing for a minute. A report that
+prints a confident wrong number is embarrassing for a year.
+
+
+STEP 6.  WRITE THE OUTPUT TO out\ , NEVER TO THE SAME FOLDER AS THE INPUT
+--------------------------------------------------------------------------
+    out\EPIRUSMEDEYE_REPORT_v2_2026-09-25.docx
+
+data\ is what you were given. out\ is what you made. Never mix them, because
+the day you do you will email a source file to a Ministry or overwrite an
+export you cannot re-download.
+
+And put a VERSION and a DATE in the name that CHANGE when the content
+changes. I broke this rule and sent you two different documents under one
+filename, which is why you could not tell which was the clean one.
+
+
+STEP 7.  GUARD THE OUTPUT BEFORE YOU TRUST IT
+----------------------------------------------
+    from _shared import guard, ONLY_MINORMED
+    d.save(path)
+    guard(path, ONLY_MINORMED)      # deletes the file if the other programme is in it
+
+Read your own output back and check it. The guard above is the programme-mixing
+one, but the principle is general: after writing a document, open it and test
+the thing you are afraid of.
+
+
+THE FOLDER LAYOUT THAT KEEPS THIS STRAIGHT
+===========================================
+
+    D:\PROJECTS\PYTHON\INTERREG\          <- ONE PyCharm project, ONE .venv
+        requirements.txt
+        _shared.py
+        HOW_TO_MAKE_A_REPORT.txt
+        epirusmedeye\
+            data\        the exports you download
+            out\         the reports and charts you produce
+            build_report.py
+            build_charts.py
+        minormed\
+            data\
+            out\
+            build_report.py
+
+One project, one virtual environment, install the three libraries once. Each
+programme keeps its own data and its own output, so nothing can cross over.
