@@ -1,5 +1,39 @@
 #!/usr/bin/env python3
-"""AMMOS budget model, v4, 28 Sep 2026 — six partners at 1,303,000.
+"""AMMOS budget model, v5, 30 Sep 2026 — six partners at 1,300,000, NO LEVER.
+
+WHAT CHANGED IN v5, AND WHY IT IS A RETREAT
+
+The 4.4.3(b) lever is GONE. Columns O and P are zero for every partner, and
+the 50% floor is carried by the MPC partners' own allocations: 665,000 of
+1,300,000, which is 51.15% with 15,000 of margin and no interpretation of
+anything by anybody.
+
+Dr Antonio Olita of ISAC, CNR refused the lever, on 30 September, and he was
+right. His argument was that in previous MED programmes an EU partner could
+only satisfy the MPC requirement by ACTUALLY SPENDING in MPC territory -
+buying goods, building works - and not by having its staff carry out work on
+site, because the staff is paid in Italy.
+
+The mechanics of THIS call point the same way, and I had not seen it. 4.4.3(b)
+requires "the said budgeted DIRECT COSTS" to be indicated and justified in the
+dedicated budget table. Travel is CC3, a flat rate of 15% of staff, and the
+Guidelines say partners "do not have to document or prove that the expenses
+have been incurred and paid". So the cost of getting CNR to Ucari Lake sits
+inside a simplified cost with no invoices behind it and there is nothing to
+itemise. That left only CC1 staff time, which is exactly what he disputes.
+
+He is also not travelling to Lebanon - the security situation - so the
+Lebanese half of the claim was gone regardless.
+
+Note for the record: the footnote attached to the disputed sentence, number 15
+on page 39, is MISSING from the text copy used here. It may define "level of
+expenditure in MPCs" outright. Read it in the PDF before anyone revisits this.
+
+So the Greeks give back the 24,000 that the lever bought them. That is the
+honest price of having built on a contested reading, and 24,000 is cheap
+compared with discovering it at audit in 2028.
+
+--- v4, 28 Sep 2026, six partners at 1,303,000 ---
 
 WHAT CHANGED IN v4
 
@@ -172,11 +206,19 @@ BASE = str(here(__file__))
 # AMMOS_budget_2026-09-22.xlsx and is on the FIVE-partner 1.300.000 split, so
 # it stays where it is rather than being silently overwritten by a different
 # budget under the same name.
-OUT = f"{BASE}/AMMOS_budget_model_v4_1303000_2026-09-28.xlsx"
+OUT = f"{BASE}/AMMOS_budget_model_v6_1300000_CNR_SPLIT_2026-10-01.xlsx"
+# The one that goes to the six partners. Generated, not hand-stripped.
+PARTNER_OUT = f"{BASE}/AMMOS_budget_v6_PARTNERS_COPY_2026-10-01.xlsx"
 
 EU_RATE = 0.92
 EU_MAX = 1_200_000
-CEILING = EU_MAX / EU_RATE          # 1,304,347.83 total eligible
+# ROUNDED, because this value goes INTO A FORMULA that partners open.
+# EU_MAX / EU_RATE is 1304347.8260869565 in binary floating point, and that
+# is what appeared in the cell. When CNR sent the file back Excel had already
+# truncated it to 1304347.82608695 - harmless arithmetically, but a partner
+# who clicks the cell sees fifteen digits of noise and reasonably wonders
+# whether the model is sound. Same reason 1-EU_RATE is rounded below.
+CEILING = round(EU_MAX / EU_RATE, 2)   # 1,304,347.83 total eligible
 FLAT_TRAVEL = 0.15                  # of staff costs  (CC3)
 FLAT_ADMIN = 0.15                   # of staff costs  (CC2 - this is ELKE's pot)
 CAP_ONE = 0.35                      # max direct costs to one organisation
@@ -202,20 +244,31 @@ MPC_BUFFER = 5_000                  # euros of margin wanted on the 50% floor
 # The last two columns are the 4.4.3(b) declaration and they are zero for
 # everyone except CNR, whose job is on-site quality assurance and training at
 # the Turkish and Lebanese sites.
-TOTAL_TARGET = 1_303_000
+TOTAL_TARGET = 1_300_000
 PARTNERS = [
-    ("HCMR",                    "Greece",  "EUMC", 173_500, 30_000, 107_450, 0,
+    ("HCMR",                    "Greece",  "EUMC", 173_500, 30_000,  94_450, 0,
      0, 0),
-    ("University of the Aegean", "Greece", "EUMC",  60_000,  8_000, 129_000, 0,
+    ("University of the Aegean", "Greece", "EUMC",  60_000,  8_000, 119_000, 0,
      0, 0),
-    ("LCEC",                    "Lebanon", "MPC",   80_000, 20_000, 156_000, 0,
+    ("LCEC",                    "Lebanon", "MPC",   80_000, 20_000, 176_000, 0,
      0, 0),
     ("Pi Youth Association",    "Türkiye", "MPC",   50_000, 10_000, 155_000, 0,
      0, 0),
     ("Acıpayam Municipality",   "Türkiye", "MPC",   30_000, 12_000,  84_000, 0,
      0, 0),
-    ("ISAC, CNR, Cagliari",     "Italy",   "EUMC",  50_000,      0,  15_000, 0,
-     41_000, 30_000),
+    # CNR'S OWN SPLIT, proposed by Antonio on 01 October and checked here.
+    #
+    # CC1 50.000 for Antonio, Dr Simeone and a fellow as formally assigned
+    # man-months; CC5 5.000 for instrumentation; CC6 10.000 for the knowledge
+    # transfer workshops. CC2 and CC3 then compute themselves at 15% of staff
+    # each, which is 7.500 apiece, and the total lands on 80.000 exactly.
+    #
+    # It is better than my 40/28 split for a reason he did not give: criterion
+    # 6.2 asks whether "the need for engaging external expertise is justified".
+    # 28.000 of CC6 from a partner whose contribution IS expertise invites that
+    # question; 50.000 of staff does not.
+    ("ISAC, CNR, Cagliari",     "Italy",   "EUMC",  50_000,  5_000,  10_000, 0,
+     0, 0),
 ]
 
 # Costs already inside the CC6 lines above that need naming in the application
@@ -477,7 +530,7 @@ def build():
                 (C_ELIG, f"={L(C_DIRECT)}{r}+{L(C_TRAVEL)}{r}"
                          f"+{L(C_ADMIN)}{r}"),
                 (C_EU, f"={L(C_ELIG)}{r}*{EU_RATE}"),
-                (C_COFIN, f"={L(C_ELIG)}{r}*{1-EU_RATE}"),
+                (C_COFIN, f"={L(C_ELIG)}{r}*{round(1 - EU_RATE, 4)}"),
                 (C_PCDIR, f"=IF(${L(C_DIRECT)}${last+2}=0,0,"
                           f"{L(C_DIRECT)}{r}/${L(C_DIRECT)}${last+2})"),
                 (C_CC2PC, f"=IF({L(C_ELIG)}{r}=0,0,"
@@ -709,6 +762,22 @@ def build():
         c.number_format = fmt if k != 5 else '@'
         c.border = BORDER
 
+    # THE PRIVATE REGION, remembered so the partner copy can delete it.
+    #
+    # Rows sr to kr+8 hold two things that must never leave this office: the
+    # "how much can the Aegean take" calculator, which is a negotiating
+    # position, and HIS OWN CC1 LINE, which contains his monthly employer cost
+    # and the share of his contracted hours. That is personal remuneration
+    # information about the Lead Beneficiary's adviser, in a file whose whole
+    # purpose is to be sent to six partners.
+    #
+    # Somebody stripped it by hand before this workbook went to CNR, and did
+    # it correctly - but also deleted the READ ME and CC_MAPPING sheets, which
+    # are the two things partners most need. A manual step that has to be
+    # remembered every time, and got half right the first time, should not be
+    # a manual step.
+    PRIVATE_ROWS = (sr, kr + 8)
+
     note_r = kr + 9
     for txt, colour in (
         ("Column O: for an MPC partner this is all of its direct cost. For HCMR or "
@@ -847,6 +916,55 @@ def build():
 
     wb.save(OUT)
     print("wrote", OUT)
+
+    # ---- and the partner-safe copy, generated rather than remembered
+    #
+    # TWO PLACES, NOT ONE. Deleting the private rows from the BUDGET sheet was
+    # not enough: section 4 of the READ ME is about HIS salary too - "You said
+    # 887 a month NET" - and it survived. The assertion below caught it, which
+    # is the entire reason the assertion exists. A privacy control that is not
+    # verified is a hope.
+    #
+    # Found by CONTENT rather than by row number, so it keeps working when the
+    # notes above it change length.
+    rm = wb["READ ME"]
+    start = end = None
+    for row in rm.iter_rows(min_col=2, max_col=2):
+        v = str(row[0].value or "")
+        if v.startswith("4. CC1 pays the employer"):
+            start = row[0].row
+        elif start and v.startswith("5. "):
+            end = row[0].row
+            row[0].value = "4. " + v[3:]      # renumber what is left
+            break
+    assert start and end, ("cannot find section 4 of the READ ME to remove. "
+                           "Do NOT ship a partner copy until this is fixed.")
+    rm.delete_rows(start, end - start)
+
+    first_row, last_row = PRIVATE_ROWS
+    b.delete_rows(first_row, last_row - first_row + 1)
+    # No clean() here: this script does not import it, and the string is
+    # written without dashes so it needs no dash rule applied.
+    b.cell(row=first_row, column=1, value=(
+        "This is the partner copy. A block of internal working notes has been "
+        "removed; nothing in the budget above it or in the rule checks has "
+        "changed.")).font = Font(size=9, italic=True, color="5A6B7D")
+    wb.save(PARTNER_OUT)
+    print("wrote", PARTNER_OUT)
+    print("  partner copy: internal rows removed, READ ME and CC_MAPPING KEPT")
+
+    # PROVE IT. A privacy control that is not verified is a hope.
+    import openpyxl as _x
+    chk = _x.load_workbook(PARTNER_OUT)
+    assert set(chk.sheetnames) == {"READ ME", "BUDGET", "CC_MAPPING"}, \
+        f"partner copy lost a sheet: {chk.sheetnames}"
+    text = " ".join(str(c.value) for sh in chk.worksheets
+                    for row in sh.iter_rows() for c in row if c.value is not None)
+    for forbidden in ("HOW MUCH CAN THE AEGEAN TAKE", "HIS OWN CC1 LINE",
+                      "employer cost", "εργοδοτικό", "contracted hours"):
+        assert forbidden.lower() not in text.lower(), (
+            f"the partner copy still contains {forbidden!r}. Not shipping it.")
+    print("  verified: no personal or negotiating content in the partner copy")
     print(f"  direct {tot_direct:,.0f}   total eligible {tot_elig:,.0f}   "
           f"EU {tot_elig*EU_RATE:,.0f}   co-fin {tot_elig*(1-EU_RATE):,.0f}")
     print(f"  largest partner {max(direct.values())/tot_direct:.2%} of direct "
