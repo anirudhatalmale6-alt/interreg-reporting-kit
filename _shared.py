@@ -108,6 +108,15 @@ TRACKER_COLUMNS = {
     "deliv": ("Deliverable",), "cat": ("Cost category",),
     "budget": ("THIS deliverable", "Budget ex VAT"),
     "ctot": ("CONTRACT tender",),
+    # THE PLANNED DATES. Added 01/10 for the Nifty export, and added HERE
+    # rather than in that script because both trackers carry them and the
+    # next thing that needs a start and an end date would otherwise read the
+    # sheet a second time with its own spelling of the heading.
+    #
+    # They are also what "Days late" is measured against, so anything that
+    # reports a delay and cannot see these is reporting a number it cannot
+    # explain.
+    "ppub": ("Planned publication",), "psig": ("Planned signature",),
     "apub": ("ACTUAL publication",), "aoff": ("ACTUAL offers",),
     "asig": ("ACTUAL signature",), "amt": ("Contract amount incl",),
     "preapp": ("Pre-approval obtained",), "blocked": ("Blocked",),
