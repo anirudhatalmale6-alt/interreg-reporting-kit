@@ -41,13 +41,23 @@ tracker as the single source for procurement. If you want Nifty to show
 procurement, RE-IMPORT from this script rather than editing inside Nifty. A
 regenerated list is always right; an edited copy is right for about a week.
 
-ON THE COLUMN NAMES
+ON THE COLUMN NAMES - NOW CONFIRMED FROM YOUR OWN SCREENSHOT
 
-I do not know the exact headings Nifty's wizard expects, and I am not going to
-pretend otherwise. The import has a FIELD MAPPING step - it shows your columns
-on one side and its own fields on the other. The headings below are the common
-ones and should map without argument. Send me a screenshot of that mapping
-screen and I will match them exactly if any of them do not line up.
+The first version guessed at the headings and said so. You sent the mapping
+screen, so they are no longer a guess. Nifty's template fields are:
+
+    Task Name*, Task Description, List, Status, Task Assignees, Task Tags,
+    Due Date, Start Date, Reminder, Story Points, Completed, Archived,
+    Subtasks
+
+All eight of my columns auto-mapped, and the MINOR-MED file validated at
+"All 34, Invalid 0". The headings below now use Nifty's own words exactly -
+"List" rather than "Task Group", "Task Assignees" rather than "Assignee" -
+so the mapping is a match rather than an inference.
+
+One field was being left on the table: COMPLETED. It is separate from Status,
+so a task whose Status reads "Completed" can still sit in the board as open
+with a label on it. The export now sets both.
 """
 import csv
 import datetime as dt
@@ -138,8 +148,9 @@ def main():
     n_dated = 0
     with open(out, "w", newline="", encoding="utf-8-sig") as fh:
         w = csv.writer(fh)
-        w.writerow(["Task Name", "Task Group", "Description", "Assignee",
-                    "Start Date", "Due Date", "Status", "Tags"])
+        w.writerow(["Task Name", "Task Description", "List", "Status",
+                    "Task Assignees", "Task Tags", "Due Date", "Start Date",
+                    "Completed"])
         for r in unit:
             key = STATUS_KEY.get(str(r["status"]).strip().upper())
             assert key or not str(r["status"]).strip(), (
@@ -168,10 +179,10 @@ def main():
                 f"Days late: {int(r['late'])}" if r["late"] else "",
                 f"Blocked: {r['com']}" if r["com"] else "",
             ] if x)
-            w.writerow([name or f"Contract {r['no']}", r["ben"], desc,
-                        r["ben"], start, due,
-                        NIFTY_STATUS.get(key, "To Do"),
-                        ";".join(tags(r))])
+            w.writerow([name or f"Contract {r['no']}", desc, r["ben"],
+                        NIFTY_STATUS.get(key, "To Do"), r["ben"],
+                        ";".join(tags(r)), due, start,
+                        "true" if key == "done" else "false"])
             if start or due:
                 n_dated += 1
 
