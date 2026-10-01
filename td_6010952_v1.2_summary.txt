@@ -1,0 +1,92 @@
+==============================================================================
+MINOR-MED, MIS 6010952, technical sheet version 1.2 (Επικαιροποίηση)
+==============================================================================
+title      Minority Inclusive Medical Outreach for Remote Mountainous Areas in Greece and Albania
+duration   13/02/2026 to 13/02/2028, 24,00 months
+submitted  01/09/2026 03:35
+approved   02/09/2026
+source     report_140109.pdf
+
+APPROVED BUDGET
+------------------------------------------------------------------------------
+  EU contribution          710.229,02   80.00%
+  national                 177.557,25   20.00%
+  TOTAL ELIGIBLE           887.786,27
+
+BY PARTNER
+  1. ΕΠΙΤΕΛΙΚΗ ΔΟΜΗ ΕΣΠΑ ΥΠΟΥΡΓΕΙΟΥ ΥΓΕΙΑΣ                    210.631,37  Ελλάδα
+  2. REGIONAL COUNCIL OF VLORA                                195.062,87  Αλβανία
+  3. ΓΕΝΙΚΟ ΝΟΣΟΚΟΜΕΙΟ ΦΙΛΙΑΤΩΝ                               215.171,81  Ελλάδα
+  4. ΑΘΗΝΑ ΕΡΕΥΝΗΤΙΚΟ ΚΕΝΤΡΟ ΚΑΙΝΟΤΟΜΙΑΣ ΣΤΙΣ ΤΕΧΝΟΛΟΓΙΕΣ     142.226,72  Ελλάδα
+  5. NGO DIAGNOSIS                                            124.693,50  Αλβανία
+
+BY COST CATEGORY
+  Προσωπικό                      167.810,62   18.90%
+  Γενικά έξοδα                    17.147,08    1.93%
+  Ταξίδια/διαμονή                 14.224,57    1.60%
+  Εξωτ. εμπειρογνωμοσύνη         455.504,00   51.31%
+  Εξοπλισμός                     233.100,00   26.26%
+  Υποδομή/επενδύσεις                   0,00    0.00%
+  TOTAL                          887.786,27
+
+BY WORK PACKAGE
+  WP1 PROJECT MANAGEMENT AND COORDINATION               84.125,91   13/02/2026 to 13/02/2028
+  WP2 COMMUNICATION, DISSEMINATION, AND PUBLIC ENG      83.402,10   13/02/2026 to 13/02/2028
+  WP3 TECHNOLOGY DEVELOPMENT, EQUIPMENT PROCUREMEN     371.753,89   13/02/2026 to 13/02/2028
+  WP4 SPECIALIZED MEDICAL VISITS AND CAPACITY-BUIL     249.791,16   13/02/2026 to 13/02/2028
+  WP5 SUSTAINABILITY PLANNING AND FOLLOW-UP             88.874,75   01/09/2026 to 31/08/2027
+  WP6 Activities outside the eligible area               9.838,46   13/02/2026 to 13/02/2028
+
+INDICATORS
+  RCO84    Πιλοτικές δράσεις που αναπτύσσονται από κοιν 2 Αριθμός
+  RCO87    Οργανισμοί που συνεργάζονται σε διασυνοριακό 5 Φορείς
+  RCR84    Οργανισμοί που συνεργάζονται σε διασυνοριακό 2 Φορείς
+
+CROSS-CHECKS
+------------------------------------------------------------------------------
+  ok   funding rows sum to the printed ΣΥΝΟΛΑ                         887.786,27
+  ok   EU + national equals the total                                 887.786,27
+  ok   work package budgets sum to the grand total                    887.786,27
+  ok   work package grand total equals the funding total              887.786,27
+  ok   WP1 cost categories sum to its own total                        84.125,91
+  ok   WP2 cost categories sum to its own total                        83.402,10
+  ok   WP3 cost categories sum to its own total                       371.753,89
+  ok   WP4 cost categories sum to its own total                       249.791,16
+  ok   WP5 cost categories sum to its own total                        88.874,75
+  ok   WP6 cost categories sum to its own total                         9.838,46
+  ok   WP1 category total equals its work package budget               84.125,91
+  ok   WP2 category total equals its work package budget               83.402,10
+  ok   WP3 category total equals its work package budget              371.753,89
+  ok   WP4 category total equals its work package budget              249.791,16
+  ok   WP5 category total equals its work package budget               88.874,75
+  ok   WP6 category total equals its work package budget                9.838,46
+  ok   column total, Προσωπικό                                        167.810,62
+  ok   column total, Γενικά έξοδα                                      17.147,08
+  ok   column total, Ταξίδια/διαμονή                                   14.224,57
+  ok   column total, Εξωτ. εμπειρογνωμοσύνη                           455.504,00
+  ok   column total, Εξοπλισμός                                       233.100,00
+  ok   column total, Υποδομή/επενδύσεις                                     0,00
+  ok   partner 1 deliverable rows sum to its ΣΥΝΟΛΟ                   210.631,37
+  ok   partner 2 deliverable rows sum to its ΣΥΝΟΛΟ                   195.062,87
+  ok   partner 3 deliverable rows sum to its ΣΥΝΟΛΟ                   215.171,81
+  ok   partner 4 deliverable rows sum to its ΣΥΝΟΛΟ                   142.226,72
+  ok   partner 5 deliverable rows sum to its ΣΥΝΟΛΟ                   124.693,50
+  ok   partner totals sum to the grand total                          887.786,27
+  ok   WP1 from the analytical table equals the WP table               84.125,91
+  ok   WP2 from the analytical table equals the WP table               83.402,10
+  ok   WP3 from the analytical table equals the WP table              371.753,89
+  ok   WP4 from the analytical table equals the WP table              249.791,16
+  ok   WP5 from the analytical table equals the WP table               88.874,75
+  ok   WP6 from the analytical table equals the WP table                9.838,46
+  ok   partner 1 funding row equals its analytical ΣΥΝΟΛΟ             210.631,37
+  ok   partner 2 funding row equals its analytical ΣΥΝΟΛΟ             195.062,87
+  ok   partner 3 funding row equals its analytical ΣΥΝΟΛΟ             215.171,81
+  ok   partner 4 funding row equals its analytical ΣΥΝΟΛΟ             142.226,72
+  ok   partner 5 funding row equals its analytical ΣΥΝΟΛΟ             124.693,50
+
+FLAGS, legal but they need a sentence in the report
+------------------------------------------------------------------------------
+  ! WP5 runs 01/09/2026 to 31/08/2027, inside but not equal to the project period 13/02/2026 to 13/02/2028
+
+[written] td_6010952_v1.2_partner_deliverable_category.csv
+[written] td_6010952_v1.2_wp_category.csv
