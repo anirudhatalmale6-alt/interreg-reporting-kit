@@ -919,6 +919,32 @@ def build():
 
     # ---- and the partner-safe copy, generated rather than remembered
     #
+    # HE CORRECTED ME ON WHAT "SAFE" MEANS, 01 October, and he was right.
+    #
+    # I had kept the READ ME and CC_MAPPING sheets in the partner copy on the
+    # reasoning that CC_MAPPING corrects four cost-category errors partners
+    # would otherwise copy. His answer: "they should not have all this
+    # information and the coking behind. It creates problems and gives
+    # information they do not need."
+    #
+    # He is right and my reasoning was wrong in a specific way. Those two
+    # sheets are not reference material, they are the WORKINGS: the derivation
+    # of ELKE's 6,5% and therefore why HCMR's staff line is the size it is;
+    # the verdict that the Lead Partner's own template is wrong on four of six
+    # lines; that a previous split was non-compliant and I had not noticed;
+    # the whole negotiating history including figures that came from my own
+    # illustrative draft. Handing six organisations the complete derivation of
+    # every allocation gives each of them a lever, in a partnership where two
+    # have already negotiated against numbers nobody agreed.
+    #
+    # The correction partners need is separable from the audit trail of whose
+    # mistake it was. I had conflated the content with its framing.
+    #
+    # So: partner copy = THE BUDGET SHEET ONLY, which is what he did by hand.
+    # And the same principle is now applied to what remains INSIDE that sheet,
+    # because he removed the two sheets but the budget sheet still explained
+    # ELKE and the 4.4.3(b) manoeuvre to every partner.
+    #
     # TWO PLACES, NOT ONE. Deleting the private rows from the BUDGET sheet was
     # not enough: section 4 of the READ ME is about HIS salary too - "You said
     # 887 a month NET" - and it survived. The assertion below caught it, which
@@ -946,25 +972,74 @@ def build():
     # No clean() here: this script does not import it, and the string is
     # written without dashes so it needs no dash rule applied.
     b.cell(row=first_row, column=1, value=(
-        "This is the partner copy. A block of internal working notes has been "
-        "removed; nothing in the budget above it or in the rule checks has "
-        "changed.")).font = Font(size=9, italic=True, color="5A6B7D")
+        "Partner copy. Internal working notes have been removed; no figure "
+        "and no rule in the budget above has changed."
+    )).font = Font(size=9, italic=True, color="5A6B7D")
+
+    # THE TWO SHEETS OF WORKINGS GO.
+    for sheet in ("READ ME", "CC_MAPPING"):
+        del wb[sheet]
+
+    # AND THE WORKINGS THAT REMAIN INSIDE THE BUDGET SHEET.
+    #
+    # He removed the two sheets but this one still named ELKE three times,
+    # described CC2 as "what the finance office gets", and labelled a rule
+    # check with the 4.4.3(b) history. Partners need the programme's RULES.
+    # They do not need to know which internal account a flat rate feeds, nor
+    # that the 50% floor was ever in question.
+    # ORDER MATTERS HERE, AND I GOT IT WRONG ONCE.
+    #
+    # My first attempt collected rows to delete and rows to relabel in one
+    # pass, deleted them, and THEN wrote the corrected column header to
+    # "row 4". But row 2 - the instruction line - contains the word ELKE, so
+    # it was swept into the delete list, every row shifted up by one, and the
+    # header I then rewrote at row 4 was no longer the header. The assertion
+    # caught it, reporting the old text still present at R3.
+    #
+    # So: RELABEL EVERYTHING FIRST, while the row numbers are still the ones
+    # the sheet was built with. Then delete, bottom upwards. And find the
+    # header by its own text rather than trusting a remembered row number.
+    b["A2"] = ("Yellow = you fill in. Everything else calculates. Both flat "
+               "rates are fixed by the programme at 15% of staff costs each.")
+    for row in b.iter_rows():
+        for c in row:
+            if str(c.value or "").startswith("CC2 as % of own eligible"):
+                c.value = "CC2 as % of own eligible"
+            elif str(c.value or "").startswith("Of that, MPC PARTNERS alone"):
+                c.value = ("Of that, held by partners established in "
+                           "Mediterranean Partner Countries")
+                # the verdict beside it carried the same history
+                b.cell(row=c.row, column=8,
+                       value=f'=IF(F{c.row}>=0.5,"AT OR ABOVE 50%","BELOW 50%")')
+
+    # Now the deletions. Only rows 5 and below, so the title, the instruction
+    # line and the header row can never be swept up by a keyword match.
+    drop_rows = [c.row for row in b.iter_rows(min_row=5, min_col=1, max_col=1)
+                 for c in row if "ELKE" in str(c.value or "")]
+    for r in sorted(drop_rows, reverse=True):
+        b.delete_rows(r, 1)
+
     wb.save(PARTNER_OUT)
     print("wrote", PARTNER_OUT)
-    print("  partner copy: internal rows removed, READ ME and CC_MAPPING KEPT")
+    print("  partner copy: BUDGET sheet only, workings removed")
 
-    # PROVE IT. A privacy control that is not verified is a hope.
+    # PROVE IT. A privacy control that is not verified is a hope - and this
+    # assertion has already caught one leak that row deletion missed.
     import openpyxl as _x
     chk = _x.load_workbook(PARTNER_OUT)
-    assert set(chk.sheetnames) == {"READ ME", "BUDGET", "CC_MAPPING"}, \
-        f"partner copy lost a sheet: {chk.sheetnames}"
+    assert chk.sheetnames == ["BUDGET"], \
+        f"partner copy should hold the BUDGET sheet alone: {chk.sheetnames}"
     text = " ".join(str(c.value) for sh in chk.worksheets
                     for row in sh.iter_rows() for c in row if c.value is not None)
     for forbidden in ("HOW MUCH CAN THE AEGEAN TAKE", "HIS OWN CC1 LINE",
-                      "employer cost", "εργοδοτικό", "contracted hours"):
+                      "employer cost", "εργοδοτικό", "contracted hours",
+                      "payroll", "887",
+                      # and the workings, per his instruction of 01 October
+                      "ELKE", "finance office", "4.4.3(b)", "NON-COMPLIANT",
+                      "Option B", "WRONG"):
         assert forbidden.lower() not in text.lower(), (
             f"the partner copy still contains {forbidden!r}. Not shipping it.")
-    print("  verified: no personal or negotiating content in the partner copy")
+    print("  verified: no personal data and no workings in the partner copy")
     print(f"  direct {tot_direct:,.0f}   total eligible {tot_elig:,.0f}   "
           f"EU {tot_elig*EU_RATE:,.0f}   co-fin {tot_elig*(1-EU_RATE):,.0f}")
     print(f"  largest partner {max(direct.values())/tot_direct:.2%} of direct "
