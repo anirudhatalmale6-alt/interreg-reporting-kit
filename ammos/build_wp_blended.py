@@ -15,9 +15,10 @@ things he had that I did not are absorbed:
     the SUSTAINABLE TOURISM DATABASE and the topic attached to SO 2.2 is
     "tourism and the green transition" - a valuation survey is the evidence
     that ties the science to the call.
-  * the specific field method: Hakanson coastal dynamics, sea level rise
-    scenarios from 0.2 to 1 metre, biodiversity spot mapping, photographic
-    guide.
+  * the specific field method: sea level rise scenarios from 0.2 to 1 metre,
+    biodiversity spot mapping, photographic guide.  His draft also named the
+    Hakanson methodology for the coastal dynamics; that has been REMOVED, see
+    the note below.
   * the Limnos geopark absorbing maintenance cost after closure, which is the
     strongest sustainability argument in either document.
 
@@ -96,15 +97,27 @@ _sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 from _shared import here
 
 BASE = str(here(__file__))
-OUT = f"{BASE}/AMMOS_Work_Packages_v3_1303000_2026-09-28.docx"
+OUT = f"{BASE}/AMMOS_Work_Packages_v4_1300000_NO_LEVER_2026-09-30.docx"
 
-TOTAL_ELIGIBLE = 1_303_000.00
+TOTAL_ELIGIBLE = 1_300_000.00
 MPC_FLOOR = 0.50
 ORG_CAP = 0.35
 MAX_TECHNICAL_WPS = 4
 MAX_ACTIVITIES = 3
 SUBCONTRACT = 20_000.00
 THREE_OFFERS_FROM, OPEN_TENDER_FROM = 15_000.00, 30_000.00
+
+# PARTNER NUMBERS, FIXED BY HIM ON 02 OCTOBER AND NOT NEGOTIABLE HERE.
+#
+# PP00 to PP05, in his order, because LCEC is already preparing its papers as
+# PP05 and the official budget template references partners by "Partner N."
+# throughout. A partner that has started filling forms under one number must
+# not be renumbered by us: every cross-reference in every annex would break,
+# and the one thing worse than an unnumbered partnership is two numberings.
+#
+# Note it starts at PP00 for the Lead Partner, not PP01.
+PP = {"HCMR": "PP00", "UAEG": "PP01", "PIYA": "PP02",
+      "ACIP": "PP03", "CNR": "PP04", "LCEC": "PP05"}
 
 P = {
     "HCMR": ("HCMR", "Greece", "EUMC"),
@@ -114,32 +127,69 @@ P = {
     "LCEC": ("LCEC", "Lebanon", "MPC"),
     "CNR": ("ISAC, CNR, Cagliari Section", "Italy", "EUMC"),
 }
-# AGREED 28 September, six partners, total eligible 1.303.000.
+assert set(PP) == set(P), (
+    f"the partner-number map and the partner list disagree: "
+    f"{set(PP) ^ set(P)}. Every partner needs a PP number and every PP "
+    f"number needs a partner.")
+assert len(set(PP.values())) == len(PP), "two partners share a PP number"
+# 30 September, six partners, total eligible 1.300.000, NO 4.4.3(b).
 #
 # Total eligible per partner is direct + 0.30 x staff, because office and
 # administration and travel and accommodation are both flat rates of 15% of
-# staff. So the figures below are chosen to land on the agreed per-partner
-# totals: HCMR 363.000, UAEG 215.000, PIYA 230.000, ACIP 135.000,
-# LCEC 280.000, CNR 80.000.
-DIRECT = {"HCMR": 310_950.0, "UAEG": 197_000.0, "LCEC": 256_000.0,
-          "PIYA": 215_000.0, "ACIP": 126_000.0, "CNR": 65_000.0}
+# staff. So the figures below land on: HCMR 350.000, UAEG 205.000,
+# LCEC 300.000, PIYA 230.000, ACIP 135.000, CNR 80.000.
+#
+# These are the 22 September figures restored, plus CNR. The 28 September
+# version had HCMR at 363.000 and the Aegean at 215.000, paid for by counting
+# CNR's work in MPC territory toward the floor - which CNR then refused to
+# sign. So the Greeks give the 24.000 back and nothing in the budget needs
+# anybody to interpret a rule.
+DIRECT = {"HCMR": 297_950.0, "UAEG": 187_000.0, "LCEC": 276_000.0,
+          "PIYA": 215_000.0, "ACIP": 126_000.0, "CNR": 68_000.0}
 STAFF = {"HCMR": 173_500.0, "UAEG": 60_000.0, "LCEC": 80_000.0,
-         "PIYA": 50_000.0, "ACIP": 30_000.0, "CNR": 50_000.0}
+         "PIYA": 50_000.0, "ACIP": 30_000.0, "CNR": 40_000.0}
 
-# THE 4.4.3(b) COMPONENT, SPLIT INTO ITS TWO PARTS ON PURPOSE
+# HAKANSON IS OUT, 01 OCTOBER.
 #
-# The 50% floor is not carried by the MPC partners on this split: they hold
-# 645.000 of 1.303.000, which is 49,50%. Compliance rests on 4.4.3(b) - an EU
-# partner's direct costs for activities IMPLEMENTED in MPC territory count
-# toward the floor - and on CNR quality-assuring the baselines and training
-# the teams at the Turkish and Lebanese sites rather than from Cagliari.
+# Conides's draft named the Hakanson methodology for the coastal dynamics
+# analysis. I then moved that analysis onto CNR's line without checking they
+# use it, and Dr Simeone told us plainly: "personally I don't know
+# specifically the Hakanson method". That is the same error as the seven
+# sheets, two days apart - assigning a NAMED thing to a partner without
+# checking they do that named thing.
 #
-# It is declared as a direct figure AND a staff figure rather than one lump,
-# because the two denominators need different arithmetic: the eligible-cost
-# denominator has to add 0,30 x the staff part, the direct-cost denominator
-# must not. One combined number would be silently wrong in one of the two.
-CNR_MPC_DIRECT = 41_000.0
-CNR_MPC_STAFF = 30_000.0
+# It comes out for a better reason than his modesty. The method we need for
+# the physical and sea-level-rise work is ALREADY INSIDE the output we are
+# capitalising: MMM_IF02 sheets 2.4 (submerged topography, including sediment
+# exchange between emerged and submerged beach) and 2.6 (meteo-marine
+# forcings: wave setup, runup, wind setup, tide, and the effect of morphology
+# and bathymetry on coastal flooding). Importing an unrelated external method
+# into a project whose premise is transferring THIS output weakens criterion
+# 4.3 and criterion 2.1 at once.
+#
+# AND THE APPLICATION FORM IS CONTRACTUALLY BINDING. Naming a method here and
+# using a different one later is a formal modification, not a free choice.
+# Simone's instinct to keep the method description general is right; the
+# answer is to be specific about the SHEETS and the SELECTION CRITERIA and
+# general about which method wins at which site.
+#
+# PENDING: Simone to name the two or three candidate approaches he would
+# actually compare for SLR on a sandy shoreline. Until he does, the text says
+# "selected per site under activity 3.1" and names no method.
+
+# THE 4.4.3(b) COMPONENT IS ZERO, AS OF 30 SEPTEMBER.
+#
+# CNR refused to sign it and was right to: 4.4.3(b) wants budgeted DIRECT
+# costs itemised in a dedicated table, travel is a flat rate the Guidelines
+# say need not be documented at all, and an Italian researcher's salary is
+# paid in Italy. Nothing was itemisable. The floor is now carried by the MPC
+# partners themselves under 4.4.3(a), at 51,15% with 15.000 of margin.
+#
+# The two fields stay in the code rather than being deleted, because the
+# check below tests BOTH denominators with and without them and prints both.
+# A zero that is computed and shown is stronger than an absence.
+CNR_MPC_DIRECT = 0.0
+CNR_MPC_STAFF = 0.0
 
 TITLES = [
     ("AMMOS — Adaptive Management of Mediterranean shOreline Sediments under "
@@ -243,7 +293,8 @@ WPS = [
               "roads; sea level rise scenarios 0.2 m to 1 m; biodiversity state "
               "and GIS map of biodiversity spots with species identification; "
               "geomorphological analysis of coastline and climate change "
-              "effects following the Hakanson methodology; marine coastal "
+              "effects, by a method selected per site under activity 3.1 and "
+              "drawn from MMM_IF02 sheets 2.3, 2.4 and 2.6; marine coastal "
               "survey 0–100 m with Posidonia GIS, sea bottom type and fishing "
               "activity (Lemnos only); photographic guide  [C]"),
       ("3.3", "Tourism and valuation baseline: visitor numbers and seasonality "
@@ -251,7 +302,8 @@ WPS = [
               "willingness to pay, and the potential effects of tourism on "
               "water and energy  [C]")],
      [("HCMR", "Lead. Adaptation of MMM_IF02, the Lemnos baseline, the "
-               "Hakanson geomorphological analysis and the marine survey. "
+               "ecological and biological sheet transfer and the marine "
+               "survey. "
                "Scientific coordination of cross-site comparability, and the "
                "valuation component under activity 3.3."),
       ("UAEG", "Spatial data standards and the GIS layer, so three national "
@@ -265,9 +317,11 @@ WPS = [
               "capitalises, so the transfer workshop and the modular decision "
               "on which of the seven method sheets applies at which site are "
               "led by the people who wrote them. Quality assurance of all "
-              "three territorial baselines, carried out ON SITE at Ucarı Lake "
-              "and at the Lebanese site as well as on Lemnos, so that the "
-              "three national baselines are comparable in fact and not only "
+              "three territorial baselines: on site at Lemnos and at Ucarı "
+              "Lake, and as structured remote review of LCEC's fieldwork for "
+              "the Lebanese baseline, which the current security situation "
+              "makes the responsible arrangement. The purpose either way is "
+              "that the three baselines are comparable in fact and not only "
               "in format.")]),
 
     ("WP4", "Demonstrating it on three shores", "TECHNICAL — technical level",
@@ -596,8 +650,16 @@ def main():
               if cc == c and "ctivity lead" in tt]
         other = [w[0] for w in WPS if w[3] != c and w[0] not in al
                  and any(cc in (c, "ALL") for cc, _ in w[7])]
-        rows.append([f"{P[c][0]} ({P[c][1]})", ", ".join(leads) or "—",
-                     ", ".join(al) or "—", ", ".join(other) or "—"])
+        # "—" AS THE EMPTY PLACEHOLDER WAS EATEN BY MY OWN DASH RULE.
+        #
+        # clean() turns a dash with whitespace either side into ", ", because
+        # he asked for no dashes as punctuation. Applied to a lone em dash it
+        # returns ", " - so three cells in this partner-facing table read
+        # ", " instead of "none", and it shipped. The rule did exactly what it
+        # was told; the placeholder was the wrong character to choose in a
+        # document that strips that character.
+        rows.append([f"{P[c][0]} ({P[c][1]})", ", ".join(leads) or "none",
+                     ", ".join(al) or "none", ", ".join(other) or "none"])
     table(["Partner", "Leads", "Activity lead", "Contributes to"], rows, size=9)
 
     # THE AUTONOMOUS REGION OF SARDINIA CANNOT APPEAR IN THE PARTNER-FACING
@@ -671,7 +733,7 @@ def main():
         "Sustainable Tourism Database and SO 2.2's topic is tourism and the "
         "green transition — a valuation survey is what ties the science to the "
         "call. I under-weighted it.",
-        "ABSORBED: the specific field method — Hakanson coastal dynamics, sea "
+        "ABSORBED: the specific field method — sea "
         "level rise scenarios 0.2 m to 1 m, biodiversity spot mapping with "
         "species identification, the photographic guide.",
         "ABSORBED and untouched: the Limnos geopark absorbing maintenance costs "
@@ -719,7 +781,7 @@ def main():
     def gr2(x):
         return f"{x:,.0f}".replace(",", ".")
 
-    opts = [("as agreed 28 Sep", elig_now["ACIP"]), ("A", 200_000.0),
+    opts = [("as agreed 30 Sep", elig_now["ACIP"]), ("A", 200_000.0),
             ("B", 230_000.0), ("C  (their request)", 270_000.0)]
     rows, elke_fail = [], []
     for label, acip in opts:
@@ -731,7 +793,7 @@ def main():
         rows.append([label, gr2(acip), gr2(hcmr),
                      f"{mpc / TOTAL_ELIGIBLE:.2%}".replace(".", ","),
                      f"{elke:.2%}".replace(".", ",")])
-    table(["Option", "Acıpayam", "HCMR", "MPC on eligible incl. 4.4.3(b)",
+    table(["Option", "Acıpayam", "HCMR", "MPC partners, on total eligible",
            "ELKE"], rows, size=9)
     # ELKE is paid only out of CC2, which is a flat 15% of staff, so ELKE's
     # share is 0,15 x staff / that partner's own total eligible. It therefore
