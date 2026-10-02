@@ -25,6 +25,22 @@ We have four technical work packages, WP3 to WP6. We are exactly at the
 ceiling. Nothing more can be added, and if anything needs splitting later
 something else has to merge.
 
+CORRECTION, 02 Oct, from the exported FORM rather than the Guidelines. The form
+words the same rule differently and the difference is worth reading:
+
+    "Projects shall include three mandatory Work Packages ('Management and
+     coordination', 'Communication and dissemination' and at least one
+     'Technical Work Package'). A maximum of four technical Work Packages is
+     allowed, having considered that each project expected result shall
+     correspond to at least one Work Package."
+
+The "third mandatory" is not a third fixed package - it is the requirement that
+at least one technical package exist. So 2 fixed + 4 technical = 6 is correct
+and we are compliant at the ceiling. Two further things the form fixes that the
+Guidelines do not say: WP2's title is "Communication and dissemination", not
+"Communication", and the coordinator of BOTH WP1 and WP2 is pre-set to
+"Applicant" - HCMR cannot delegate either one.
+
 Also: "the choice of the project overall objective is SET and corresponds to
 the Programme Specific Objectives." So the overall objective is not drafted at
 all - it is SO 2.2's own wording, copied.
@@ -324,7 +340,7 @@ SYNERGIES = [
      "transfers; MMM_IF01, Beach Custodians, is the second. CNR, a partner in "
      "AMMIRARE and among the named authors, is a partner here.",
      "Direct capitalisation"),
-    ("COMMON, Interreg NEXT MED 2014-2020",
+    ("COMMON, ENI CBC MED 2014-2020 (MMM code NX)",
      "MMM_NX36, the Beach litter monitoring guide, a standardised protocol "
      "aligned with the European Environment Agency methodology, in Italian, "
      "French, English and Arabic. MMM_NX35, the BEach CLEAN decalogue, for "
@@ -332,13 +348,13 @@ SYNERGIES = [
      "national contribution, which our Lebanese partner extends rather than "
      "starts.",
      "Direct capitalisation"),
-    ("MEDUSA, Interreg NEXT MED 2014-2020",
+    ("MEDUSA, ENI CBC MED 2014-2020 (MMM code NX)",
      "MMM_NX26 and NX27, adventure tourism mapping and hiking e-guides across "
      "Jordan, Lebanon, Tunisia, Catalonia and Puglia, explicitly aimed at "
      "drawing visitors to alternative areas to reduce pressure on more popular "
      "ones. The same visitor-redistribution logic as our own channelling work.",
      "Complementary method"),
-    ("CROSSDEV, Interreg NEXT MED 2014-2020",
+    ("CROSSDEV, ENI CBC MED 2014-2020 (MMM code NX)",
      "MMM_NX05 and NX06, destination-level local action plans for "
      "off-the-beaten-path areas. The model for our own uptake work package.",
      "Complementary method"),
