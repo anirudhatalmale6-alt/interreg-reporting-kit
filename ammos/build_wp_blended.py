@@ -97,7 +97,7 @@ _sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 from _shared import here
 
 BASE = str(here(__file__))
-OUT = f"{BASE}/AMMOS_Work_Packages_v4_1300000_NO_LEVER_2026-09-30.docx"
+OUT = f"{BASE}/AMMOS_Work_Packages_v5_CNR_CONFIRMED_2026-10-02.docx"
 
 TOTAL_ELIGIBLE = 1_300_000.00
 MPC_FLOOR = 0.50
@@ -312,17 +312,20 @@ WPS = [
       ("LCEC", "Baseline of the Lebanese site and the energy profile of "
                "existing visitor facilities."),
       ("PIYA", "Field data collection with the volunteer network."),
-      ("CNR", "Activity lead, 3.1. Method owner: ISAC, CNR researchers "
-              "authored the AMMIRARE coastal dynamics work this project "
-              "capitalises, so the transfer workshop and the modular decision "
-              "on which of the seven method sheets applies at which site are "
-              "led by the people who wrote them. Quality assurance of all "
-              "three territorial baselines: on site at Lemnos and at Ucarı "
-              "Lake, and as structured remote review of LCEC's fieldwork for "
-              "the Lebanese baseline, which the current security situation "
-              "makes the responsible arrangement. The purpose either way is "
-              "that the three baselines are comparable in fact and not only "
-              "in format.")]),
+      ("CNR", "Activity lead, 3.2, the territorial baselines, because the "
+              "physical characterisation is the bulk of that activity and CNR "
+              "owns the sheets it rests on. SHEETS 2.3, 2.4 AND 2.6, "
+              "confirmed by CNR on 02 October. "
+              "Dr S. Simeone is the first named author of the MMM_IF02 method "
+              "sheets, and the three CNR carries are the physical ones: 2.3 "
+              "topography of the exposed shore including drone "
+              "photogrammetry, 2.4 topography of the submerged shore "
+              "including the exchange of sediment between the two, and 2.6 "
+              "the forcings that set water level. CNR adapts these for each "
+              "of the three shore typologies, visits Lemnos and Ucarı Lake, "
+              "and quality-assures the Lebanese baseline as structured remote "
+              "review of LCEC's fieldwork, which the security situation makes "
+              "the responsible arrangement.")]),
 
     ("WP4", "Demonstrating it on three shores", "TECHNICAL — technical level",
      "UAEG", "M8–M22",
@@ -685,6 +688,75 @@ def main():
         f"the partner-facing work package document names {hits}. The "
         f"Autonomous Region of Sardinia is this programme's MANAGING "
         f"AUTHORITY and audit authority and cannot be in the partnership.")
+
+    # ------------------------------------------- THE MODULAR DECISION
+    #
+    # This table was a PROMISE until 01 October. It is now determined, because
+    # we finally read MMM_IF02 and because Acipayam told us what their site
+    # actually is: an artificial pond fed by groundwater, not a natural shore.
+    #
+    # It is also output O3.1, the first thing activity 3.1 produces, and the
+    # form wants outputs with target values. A decision recorded is an output;
+    # a decision promised is not.
+    #
+    # THE WORD MATTERS. Where a sheet does not transfer the table says
+    # SUBSTITUTED or NOT APPLICABLE, never "applied". Promising a dune
+    # vegetation protocol at a site with no dunes is the same internal
+    # inconsistency as the old "dune systems" title, and an evaluator who
+    # reads carefully will find it.
+    h("The modular decision: which method sheet runs at which site")
+    para("Determined rather than promised. The three sites form a gradient "
+         "from the shore type the method was written for to one it was not, "
+         "and establishing where the transfer stops is a result of this "
+         "project rather than a gap in it.", size=9.5, colour=GREY)
+    table(["MMM_IF02 sheet", "Lemnos, marine dune",
+           "Ucarı, artificial freshwater pond", "Lebanese coastal site"],
+          [["2.1 Dune vegetation", "Applied as written",
+            "SUBSTITUTED. No dune community exists on a groundwater-fed "
+            "reservoir. The method architecture transfers, transects, cover, "
+            "species identification and the photographic guide; the species "
+            "list and the indicator are rebuilt for a riparian shore.",
+            "Applied, adapted to local species"],
+           ["2.2 Posidonia banquettes", "Applied as written",
+            "NOT APPLICABLE. No Posidonia in freshwater.",
+            "Applied as written"],
+           ["2.3 Topography, exposed shore, drone and GNSS",
+            "Applied as written",
+            "APPLIED. Topography transfers unchanged. Water level is driven "
+            "by inflow and abstraction rather than by tide, so it becomes a "
+            "measured variable.",
+            "Applied as written"],
+           ["2.4 Topography, submerged shore, sediment exchange",
+            "Applied as written",
+            "APPLIED, adapted. No closure depth in the marine sense; the "
+            "exchange between exposed and submerged shore is still the "
+            "quantity of interest.",
+            "Applied as written"],
+           ["2.5 Posidonia meadow", "Applied as written",
+            "NOT APPLICABLE. No Posidonia in freshwater.",
+            "Applied as written"],
+           ["2.6 Forcings setting water level", "Applied as written",
+            "SUBSTITUTED. No tide and negligible wave climate. The forcing to "
+            "characterise is hydrological, groundwater inflow and abstraction, "
+            "not meteo-marine.",
+            "Applied as written"],
+           ["2.7 Ecological status of the dune, beach, banquette system",
+            "Applied as written",
+            "SUBSTITUTED. The indicator is composed for a system with none of "
+            "whose three components this site has. The architecture of a "
+            "composite status indicator transfers; the components are rebuilt.",
+            "Applied, adapted"]],
+          size=8)
+    para("Seven sheets at three sites is twenty-one decisions, not one. Four "
+         "of the seven transfer to Ucarı only by substitution or not at all, "
+         "and saying so is what makes the other seventeen credible.",
+         size=9.5, colour=GREY)
+    para("COMMON's beach litter monitoring protocol, MMM_NX36, transfers to "
+         "all three sites essentially unchanged: the European Environment "
+         "Agency litter categories and transect counting do not depend on the "
+         "water being salt. It is a MONITORING protocol and not a cleaning "
+         "programme, and no underwater or bottom cleaning is included at any "
+         "site.", size=9.5)
 
     # ---------------------------------------------------------- REVIEWER NOTES
     # He asked for my comments to sit at the END so he can read them, act on

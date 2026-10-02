@@ -45,17 +45,22 @@ the same programme page as the Guidelines:
 I have not invented a single RCO or RCR code. Every indicator slot below says
 which document supplies it.
 
-ON THE CHARACTER LIMITS
+THE CHARACTER LIMITS, NOW CONFIRMED FROM A LEGIBLE SCREENSHOT
 
-His screenshot shows a counter under each box reading "0/400" for 3.1.1 and
-"0/30" for 3.1.2, both CLIPPED BY THE WINDOW EDGE. So the real limits are
-either 400 and 300, or 4000 and 3000, and I cannot tell which from the image.
+    Summary              2.000
+    3.1.1 relevance      4.000
+    3.1.2 transnational  3.000
+    3.1.3 beneficiaries  4.000
+    3.1.4 synergies      2.000
+    logical framework    2.000 per field, his "23000" read as a typo
 
-4000 is the normal size for this section in an Interreg form and 400 would be
-about two sentences. But normal is not verified, so each section below is
-written to the larger reading AND opens with a self-contained first paragraph
-that works alone under 400 characters. The character count of each part is
-printed in the document, so he can see at a glance what fits.
+The earlier screenshot clipped these at the window edge and I wrote to both
+readings rather than guessing. Now they are known, and the sections are
+written to FILL them.
+
+That last point is not padding. A 4.000 character box containing 2.100
+characters tells an evaluator that the applicant ran out of things to say, in
+a section scored on whether the need is justified. The limit is the brief.
 """
 import datetime as dt
 import re
@@ -75,6 +80,14 @@ OUT = f"{BASE}/AMMOS_relevance_and_logframe_2026-10-02.docx"
 NAVY = RGBColor(0x1F, 0x38, 0x5E)
 GREY = RGBColor(0x5A, 0x6B, 0x7D)
 RED = RGBColor(0xB4, 0x55, 0x3C)
+
+# Confirmed from his second screenshot, which was legible.
+LIMITS = {"3.1.1": 4000, "3.1.2": 3000, "3.1.3": 4000, "3.1.4": 2000,
+          "summary": 2000}
+# Below this fraction of the box, a section reads as though the applicant ran
+# out of things to say. It is a warning, not an error - some answers really
+# are short - but on a scored section it is worth seeing.
+THIN = 0.75
 
 RANGE = re.compile(r"(?<=\d)\s*[–—]\s*(?=[A-Za-z]?\d)")
 
@@ -173,10 +186,36 @@ S311_REST = [
     "around it, and it puts that method in the hands of the authorities "
     "responsible for the shore.",
 
+    "The economic argument is the same argument. On all three shores the "
+    "sediment surface IS the tourism product: remove it and the visitors, the "
+    "concessions, the accommodation and the seasonal employment go with it. "
+    "Yet the cost of visitor pressure falls on a public authority while the "
+    "revenue accrues to private operators, which is why the measure that never "
+    "gets taken is the one nobody is individually paid to take. The project "
+    "therefore pairs the physical method with a valuation of what visitors are "
+    "willing to pay to keep a shore in good condition, so that a municipality "
+    "has a figure to set against the cost of managing it.",
+
+    "The climate dimension is specific rather than invoked. The capitalised "
+    "method characterises the response of a sediment shore to storm events and "
+    "to sea level rise across scenarios from 0.2 to 1 metre, measuring the "
+    "exchange of sediment between the exposed and the submerged shore and the "
+    "forcings that set the water level. These are the processes that decide "
+    "whether a shore recovers after a winter, and at present none of the three "
+    "receiving territories measures them in a way that would let a manager "
+    "tell recovery from loss.",
+
+    "Capitalisation, rather than new research, is the right instrument because "
+    "the knowledge gap is not scientific. The method is written, validated and "
+    "published. What is missing is that it exists in one language, for one "
+    "shore type, in one part of the Mediterranean, and the authorities who "
+    "need it are elsewhere and have never seen it.",
+
     "[TERMS OF REFERENCE: one paragraph here adopting the Terms of Reference's "
     "own wording for the sustainable tourism challenges of the cooperation "
     "area. Criterion 1.1 refers to that document explicitly and we do not yet "
-    "have it. This is the single highest-value gap in the application.]",
+    "have it. This is the single highest-value gap in the application, and "
+    "there is room for it inside the 4.000 characters.]",
 ]
 
 S312_LEAD = (
@@ -210,6 +249,22 @@ S312_REST = [
     "agreed before fieldwork begins. That is what makes the result usable by "
     "somebody who was never a partner, and it is why the project needs a "
     "cooperation structure rather than three parallel contracts.",
+
+    "There is a plain language barrier that only a transnational partnership "
+    "removes. The capitalised method is published in Italian. Its users in "
+    "this project work in Greek, Turkish and Arabic. Transfer therefore means "
+    "translation and field adaptation together, carried out with the people "
+    "who will use it rather than for them, which is not an activity a single "
+    "national project could perform.",
+
+    "The partnership is complementary by design rather than by geography. The "
+    "method's own authors adapt the physical protocols; a marine research "
+    "centre carries the ecological transfer; a university builds the shared "
+    "data standard that makes three national baselines comparable; a youth "
+    "organisation operates the volunteer monitoring the method depends on; a "
+    "municipality holds a site and the power to change how it is managed; and "
+    "a national energy and policy body carries the regulatory uptake. No "
+    "single country assembles that list.",
 ]
 
 S313_LEAD = (
@@ -219,22 +274,43 @@ S313_LEAD = (
     "rests on those shores, and the visitors who use them."
 )
 S313_REST = [
+    "The criterion asks for the NEEDS of these groups seen from the "
+    "sustainable tourism challenges, so each is given with its need and not "
+    "only its name.",
+
     "Target groups, in order of how directly the project changes what they do:",
     "Site managers and local authorities with territorial competence at the "
-    "three sites. Number: [FROM PARTNERS]. They receive the adapted method, "
-    "are trained in it, and apply it.",
-    "Technical staff of those authorities who carry out monitoring. Number: "
+    "three sites. NEED: they are accountable for shores that are visibly "
+    "degrading and have no method, no baseline and no threshold at which to "
+    "act, so decisions are taken after damage rather than before it. They "
+    "receive the adapted method, are trained in it, and apply it. Number: "
     "[FROM PARTNERS].",
-    "Tourism operators at the three shores, being concessions, boat and tour "
-    "operators, accommodation and catering. Number: [FROM PARTNERS, and "
-    "Acıpayam's figure for Ucarı has been outstanding since September].",
-    "Young people in the volunteer and custodian programmes. Number: [FROM "
-    "PIYA, who already run the network this builds on].",
+    "Technical staff of those authorities who carry out the monitoring. NEED: "
+    "field protocols they can run with equipment they can obtain, producing "
+    "data comparable between seasons, rather than one-off surveys "
+    "commissioned when a problem has already become visible. Number: [FROM "
+    "PARTNERS].",
+    "Tourism operators at the three shores: concessions, boat and tour "
+    "operators, accommodation and catering. NEED: the shore is the asset their "
+    "season depends on, and they currently experience its management as "
+    "restriction rather than as protection of the thing they sell. They need "
+    "to see the condition data and the valuation evidence that connects the "
+    "two. Number: [FROM PARTNERS, and Acıpayam's figure for Ucarı has been "
+    "outstanding since September].",
+    "Young people in the volunteer and custodian programmes. NEED: a route "
+    "into practical environmental work in their own territory, and the "
+    "training that makes their monitoring usable rather than symbolic. Number: "
+    "[FROM PIYA, who already run the network this builds on].",
     "Public authorities beyond the partnership able to replicate, including "
-    "the regional authority for the Greek site. Number: [FROM PARTNERS].",
+    "the regional authority with competence for the Greek site. NEED: a method "
+    "already tested on a shore resembling theirs, with its limits stated, so "
+    "adoption is a decision rather than a research project. Number: [FROM "
+    "PARTNERS].",
     "Final beneficiaries: residents of the three territories and seasonal "
-    "visitors to the three sites. Number: [FROM PARTNERS, visitor counts per "
-    "site per season].",
+    "visitors to the three sites. NEED: shores that remain usable and safe as "
+    "the climate changes, and a local economy that is not spending its natural "
+    "capital to earn one more season. Number: [FROM PARTNERS, visitor counts "
+    "per site per season].",
     "[EVERY NUMBER IN THIS SECTION IS DELIBERATELY BLANK. Criteria 1.3 and 2.3 "
     "both use the word QUANTIFIED, and inventing an audience size to fill a "
     "box is the one thing that cannot be corrected later. One request to each "
@@ -333,10 +409,14 @@ def main():
         D.d.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
         full = lead + " " + " ".join(rest)
         D.h(f"{num} {title}")
-        D.p(f"Lead paragraph alone: {len(lead)} characters. "
-            f"Whole section: {len(full)} characters. "
-            f"If the box limit turns out to be 400 rather than 4000, paste the "
-            f"lead paragraph only.", size=9, colour=RED, italic=True)
+        lim = LIMITS[num]
+        pct = len(full) / lim
+        D.p(f"PASTE THE WHOLE SECTION. {len(full)} characters of the "
+            f"{lim} the box allows, {pct:.0%} full. "
+            + ("Room left is for the numbers the partners owe us."
+               if pct < THIN else
+               "Close to the limit, so cut before you add."),
+            size=9, colour=RED, italic=True)
         D.h("Lead paragraph, stands alone", size=11, space=8)
         D.p(lead)
         D.h("Continuation", size=11, space=8)
@@ -409,14 +489,20 @@ def main():
     out = Path(OUT)
     D.d.save(out)
     print(f"wrote {out}")
+    # EVERY SECTION MUST FIT ITS BOX. The platform truncates silently on
+    # paste, and a sentence that loses its second half is worse than a
+    # sentence that was never written. So this is an assertion, not a note.
     for num, lead, rest in [("3.1.1", S311_LEAD, S311_REST),
                             ("3.1.2", S312_LEAD, S312_REST),
                             ("3.1.3", S313_LEAD, S313_REST)]:
         full = lead + " " + " ".join(rest)
-        assert len(lead) <= 400, (
-            f"{num} lead paragraph is {len(lead)} characters, over the 400 "
-            f"fallback. It must stand alone if the limit is 400.")
-        print(f"  {num}: lead {len(lead)} chars, full {len(full)} chars")
+        lim = LIMITS[num]
+        assert len(full) <= lim, (
+            f"{num} is {len(full)} characters and the box holds {lim}. "
+            f"Cut {len(full) - lim} characters before shipping it, or the "
+            f"platform will truncate mid-sentence.")
+        flag = "" if len(full) / lim >= THIN else "  <- room for the partner numbers"
+        print(f"  {num}: {len(full):>5} / {lim}  {len(full)/lim:>4.0%}{flag}")
     body = "\n".join(p.text for p in D.d.paragraphs)
     assert " , " not in body, "the dash rule has produced a stray comma"
     print("  dash rule clean; no indicator codes invented")
