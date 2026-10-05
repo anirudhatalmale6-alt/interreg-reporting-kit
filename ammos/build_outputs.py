@@ -70,7 +70,7 @@ from _shared import here
 from build_wp_blended import DIRECT, P, STAFF, WPS, matrix
 
 BASE = str(here(__file__))
-OUT = f"{BASE}/AMMOS_outputs_and_activities_2026-10-02.docx"
+OUT = f"{BASE}/AMMOS_outputs_and_activities_v2_ToR_2026-10-03.docx"
 
 NAVY = RGBColor(0x1F, 0x38, 0x5E)
 GREY = RGBColor(0x5A, 0x6B, 0x7D)
@@ -136,7 +136,10 @@ OUTPUTS = [
      "SUBSTITUTED or NOT APPLICABLE, with the reason. Establishing where a "
      "method stops working is what makes it usable by a fourth site that was "
      "never in the partnership, and it is the difference between capitalising "
-     "an output and restating it.",
+     "an output and restating it. The document carries an explicit uptake "
+     "section stating what an adopting organisation must do to apply it, "
+     "which programme output indicator RCO116 requires of a jointly "
+     "developed solution.",
      [("Transfer workshop and transfer requirements", 1, 4, "HCMR",
        "The AMMIRARE outputs MMM_IF02 and MMM_IF01 and the COMMON protocols "
        "are presented to the whole partnership by the organisations that "
@@ -212,7 +215,9 @@ OUTPUTS = [
      "adapted method sheets supply the rest. The cross-typology comparability "
      "layer is the genuinely new thing here: it is what allows a freshwater "
      "pond and a marine dune to be read side by side, and it is the output a "
-     "future capitalisation call can transfer onward.",
+     "future capitalisation call can transfer onward. It carries its own "
+     "uptake section - what a new territory must do to join the platform and "
+     "run the protocol - as RCO116 requires of a countable solution.",
      [("Protocol harmonisation and platform build", 10, 16, "UAEG",
        "The common monitoring protocol assembled from the adapted sheets plus "
        "MMM_NX36 unchanged, and the web-GIS platform built with its own data "
@@ -282,10 +287,18 @@ OUTPUTS = [
        "One plan per site, with the protection scheme guidelines and the "
        "maintenance cost, consulted with the operators, authorities and "
        "residents who are affected by it."),
-      ("Adoption decisions and the maintenance route", 16, 22, "HCMR",
+      ("Adoption decisions, stewardship committees and the maintenance "
+       "route", 16, 22, "HCMR",
        "The formal adoption step at each site, and for Lemnos the "
        "negotiation with the Limnos geopark to bring the area into their "
-       "network and cover maintenance through their own activities.")]),
+       "network and cover maintenance through their own activities. A Shore "
+       "Stewardship Committee is constituted at each site alongside the plan "
+       "it oversees - the responsible authority, a tourism operator, the "
+       "research partner and a civil society or youth representative - so "
+       "that each plan has a standing multi-stakeholder owner after the "
+       "project ends. This is the permanent governance structure the Terms "
+       "of Reference require, and it spans public sector, private sector, "
+       "academia and civil society as they specify.")]),
 
     ("WP6", 2,
      "Joint transferability guide and policy recommendations in English and "
@@ -298,16 +311,27 @@ OUTPUTS = [
      "consolidates the Lebanese national contribution, and is submitted back "
      "into the MMM outputs database so the next capitalisation call can "
      "transfer it onward. English and Arabic, because the southern shore is "
-     "where the method has not yet travelled.",
+     "where the method has not yet travelled. Its closing section states the "
+     "actions a fourth territory must take to adopt or upscale the method, "
+     "which is what makes it countable under RCO116 rather than merely "
+     "published.",
      [("Transferability guide drafted and reviewed", 18, 23, "HCMR",
        "Written from the project's own record rather than summarised at the "
        "end, including the documented baseline of the Acipayam canyon and "
        "pond as a worked example of a site type the source method never "
        "addressed."),
-      ("Policy recommendations and the final conference", 20, 24, "LCEC",
+      ("Policy recommendations, cooperation agreement and the final "
+       "conference", 20, 24, "LCEC",
        "Recommendations addressed to the authorities that adopted the plans "
        "and to the programme, presented at the final transferability "
-       "conference, and the guide lodged in the MMM database.")]),
+       "conference, and the guide lodged in the MMM database. A cooperation "
+       "agreement is signed by all partners, the associated organisation and "
+       "the three stewardship committees, committing them to continue "
+       "cooperating after the project. The Terms of Reference list "
+       "cooperation agreements among the expected outputs of this call, and "
+       "result indicator RCR84 is only countable where such a formal "
+       "agreement exists - it may be signed during implementation, so it is "
+       "signed here rather than hoped for afterwards.")]),
 ]
 
 MMM_MANDATORY = [
