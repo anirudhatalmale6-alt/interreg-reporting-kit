@@ -171,7 +171,7 @@ OUTPUTS = [
      [("Physical and biodiversity baselines", 5, 12, "CNR",
        "Emerged and submerged topography and the forcings regime at all three "
        "sites, from method sheets 2.3, 2.4 and 2.6, with drone survey where "
-       "the site allows it; GIS mapping of shore state, utilities and roads; "
+       "possible; GIS mapping of shore state, utilities and roads; "
        "biodiversity state and the ecological status indicator. CNR leads the "
        "physical characterisation and adapts it per site; HCMR carries the "
        "biological sheets. Lebanon is covered as a structured remote review "
@@ -290,15 +290,12 @@ OUTPUTS = [
       ("Adoption decisions, stewardship committees and the maintenance "
        "route", 16, 22, "HCMR",
        "The formal adoption step at each site, and for Lemnos the "
-       "negotiation with the Limnos geopark to bring the area into their "
-       "network and cover maintenance through their own activities. A Shore "
-       "Stewardship Committee is constituted at each site alongside the plan "
-       "it oversees - the responsible authority, a tourism operator, the "
-       "research partner and a civil society or youth representative - so "
-       "that each plan has a standing multi-stakeholder owner after the "
-       "project ends. This is the permanent governance structure the Terms "
-       "of Reference require, and it spans public sector, private sector, "
-       "academia and civil society as they specify.")]),
+       "negotiation with the Limnos geopark to carry maintenance. A Shore "
+       "Stewardship Committee is constituted at each site alongside its "
+       "plan - the responsible authority, a tourism operator, the research "
+       "partner and a civil society or youth voice - so every plan has a "
+       "standing owner afterwards, the governance structure the ToR "
+       "require.")]),
 
     ("WP6", 2,
      "Joint transferability guide and policy recommendations in English and "
@@ -325,13 +322,10 @@ OUTPUTS = [
        "Recommendations addressed to the authorities that adopted the plans "
        "and to the programme, presented at the final transferability "
        "conference, and the guide lodged in the MMM database. A cooperation "
-       "agreement is signed by all partners, the associated organisation and "
-       "the three stewardship committees, committing them to continue "
-       "cooperating after the project. The Terms of Reference list "
-       "cooperation agreements among the expected outputs of this call, and "
-       "result indicator RCR84 is only countable where such a formal "
-       "agreement exists - it may be signed during implementation, so it is "
-       "signed here rather than hoped for afterwards.")]),
+       "agreement is signed by all partners, the associate and the three "
+       "stewardship committees, committing them to keep cooperating "
+       "afterwards. The ToR list such agreements among expected outputs, and "
+       "RCR84 is countable only where one exists.")]),
 ]
 
 MMM_MANDATORY = [
