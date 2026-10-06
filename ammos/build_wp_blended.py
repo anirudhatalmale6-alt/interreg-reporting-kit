@@ -144,10 +144,15 @@ assert len(set(PP.values())) == len(PP), "two partners share a PP number"
 # CNR's work in MPC territory toward the floor - which CNR then refused to
 # sign. So the Greeks give the 24.000 back and nothing in the budget needs
 # anybody to interpret a rule.
+# 06 Oct: CNR corrected to Antonio's agreed split, which the client has now
+# issued as budget model v6 - CC1 50.000, CC6 15.000, CC5 nil, so direct
+# 65.000 not 68.000 and staff 50.000 not 40.000. The total eligible is
+# unchanged at 80.000, which is exactly why this drifted unnoticed: the
+# headline matched while the composition did not.
 DIRECT = {"HCMR": 297_950.0, "UAEG": 187_000.0, "LCEC": 276_000.0,
-          "PIYA": 215_000.0, "ACIP": 126_000.0, "CNR": 68_000.0}
+          "PIYA": 215_000.0, "ACIP": 126_000.0, "CNR": 65_000.0}
 STAFF = {"HCMR": 173_500.0, "UAEG": 60_000.0, "LCEC": 80_000.0,
-         "PIYA": 50_000.0, "ACIP": 30_000.0, "CNR": 40_000.0}
+         "PIYA": 50_000.0, "ACIP": 30_000.0, "CNR": 50_000.0}
 
 # HAKANSON IS OUT, 01 OCTOBER.
 #
