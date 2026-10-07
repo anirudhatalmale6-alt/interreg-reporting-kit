@@ -85,6 +85,13 @@ CC = {
     "CNR": (50_000.0, 0.0, 15_000.0, 0.0),
 }
 
+# First-level control is a FIXED cost, not a proportional one: four reporting
+# periods, one certificate each, per partner. Spreading each partner's whole
+# external-expertise budget by work package share put 42.412 into WP1 under the
+# label "Auditor costs" - a consultancy budget wearing the wrong label. 09 Oct.
+AUDIT = {"HCMR": 6_000.0, "UAEG": 3_500.0, "PIYA": 3_500.0, "ACIP": 3_000.0,
+         "CNR": 3_000.0, "LCEC": 4_000.0}
+
 WP_NAME = {"WP1": "WP1 Management", "WP2": "WP2 Communication",
            "WP3": "WP3", "WP4": "WP4", "WP5": "WP5", "WP6": "WP6"}
 
@@ -154,10 +161,12 @@ JUST = {
         "Equipment supporting the consultation meetings and the final "
         "transferability conference.",
     ("External expertise and services costs", "WP1"):
-        "Auditor costs - the first-level control the Programme requires of "
+        "Auditor costs: the first-level control the Programme requires of "
         "every partner, which must be independent by definition and "
-        "therefore cannot be staff. One line per partner, as error code 222 "
-        "requires.",
+        "therefore cannot be staff. A FIXED cost, not a share of budget - "
+        "four reporting periods, one certificate each, per partner, with the "
+        "Applicant higher because it also consolidates six partners' claims. "
+        "One line per partner, as error code 222 requires.",
     ("External expertise and services costs", "WP2"):
         "Website development and hosting, graphic design, certified "
         "translation into Turkish and Arabic, and local press distribution. "
@@ -227,23 +236,34 @@ def sems(wp):
 
 
 def allocate():
-    """partner -> wp -> cat -> amount, preserving both margins."""
+    """partner -> wp -> cat -> amount, preserving both margins.
+
+    External expertise in WP1 is the audit and nothing else; the remainder of
+    each partner's external expertise is spread over WP2-WP6. Everything else
+    stays proportional to the partner's work package shares.
+    """
     m = matrix()
     out = {}
     for k in P:
+        share = {wp: v / DIRECT[k] for wp, v in m[k].items() if v > 0}
+        rest = CC[k][CATS.index("External expertise and services costs")] \
+            - AUDIT[k]
+        assert rest > 0, f"{k}: audit {AUDIT[k]} exceeds its external expertise"
+        non1 = sum(s for wp, s in share.items() if wp != "WP1")
         out[k] = {}
-        for wp, v in m[k].items():
-            if v <= 0:
-                continue
-            s = v / DIRECT[k]
-            out[k][wp] = {c: CC[k][i] * s for i, c in enumerate(CATS)}
+        for wp, s in share.items():
+            row = {c: CC[k][i] * s for i, c in enumerate(CATS)}
+            row["External expertise and services costs"] = (
+                AUDIT[k] if wp == "WP1" else rest * s / non1)
+            out[k][wp] = row
     return out, m
 
 
 def main():
     alloc, m = allocate()
-    wp_tot = {w[0]: sum(m[k].get(w[0], 0.0) for k in P) for w in WPS}
     wp_ids = [w[0] for w in WPS]
+    wp_tot = {wp: sum(sum(alloc[k][wp].values()) for k in P if wp in alloc[k])
+              for wp in wp_ids}
 
     # ------------------------------------------------------- the budget lines
     lines, seq = [], 100
@@ -285,7 +305,12 @@ def main():
     for wp in wp_ids:
         got = round(sum(L["total"] for L in lines if L["wp"] == wp), 2)
         if abs(got - wp_tot[wp]) > 0.05:
-            fails.append(f"{wp} lines {got} vs matrix {wp_tot[wp]}")
+            fails.append(f"{wp} lines {got} vs allocation {wp_tot[wp]}")
+    for k in P:
+        if abs(alloc[k]["WP1"]["External expertise and services costs"]
+               - AUDIT[k]) > 0.01:
+            fails.append(f"{k} WP1 external expertise is not exactly the "
+                         f"audit - the whole point of the 09 Oct fix")
     grand = round(sum(L["total"] for L in lines), 2)
     if abs(grand - sum(DIRECT.values())) > 0.1:
         fails.append(f"grand {grand} vs {sum(DIRECT.values())}")
@@ -371,7 +396,8 @@ def main():
          [24] + [14] * len(wp_ids) + [20])
     for k in sorted(P, key=lambda x: PSHORT[x]):
         ws3.append([f"{PSHORT[k]} {P[k][0]}"]
-                   + [m[k].get(wp, 0.0) for wp in wp_ids] + [DIRECT[k]])
+                   + [sum(alloc[k].get(wp, {}).values()) for wp in wp_ids]
+                   + [DIRECT[k]])
         for col in range(2, len(wp_ids) + 3):
             ws3.cell(row=ws3.max_row, column=col).number_format = MONEY
     ws3.append(["TOTAL"] + [wp_tot[wp] for wp in wp_ids]
