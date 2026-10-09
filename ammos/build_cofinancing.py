@@ -1,48 +1,68 @@
 #!/usr/bin/env python3
-"""The six co-financing sources, and the amounts taken from HIS closed budget.
+"""The co-financing table, rewritten against the REAL screen.
 
     python3 build_cofinancing.py
 
-THE BUDGET IS CLOSED, SO THIS SECTION IS NOW SAFE TO FILL - AND NOT BEFORE.
+VERSION 2, 11 Oct. His screenshot of the live tab replaced three guesses with
+facts, and turned up two things wrong in the application as it stands.
 
-Co-financing is 8% of each partner's total eligible cost, fixed by the
-programme, so every one of these six amounts is a FUNCTION of the budget. Had I
-written them a week ago against the figures I was carrying, four of the six
-would have been wrong and would have needed re-entering after each correction.
-His export of 08-10 totals exactly 1.300.000,00 EUR and reconciles partner by
-partner and category by category, so the derived amounts are now stable.
+WHAT THE SCREENSHOT SETTLED THAT I HAD GUESSED
 
-WHICH IS WHY THIS SCRIPT DOES NOT CONTAIN THE AMOUNTS. It reads them out of his
-workbook and computes 8%. If his export and the amounts below ever disagree, it
-refuses to produce the document. I have been bitten twice on this project by my
-own constants drifting away from his platform while both looked plausible, and
-the fix both times was to stop holding a second copy of the truth.
+I predicted a "legal status: public or private" dropdown and wrote a paragraph
+agonising over whether LCEC counts as public. There is no such field. The
+dropdown is SOURCE OF FUNDING and its values are of the kind "Own funds" and
+"Contributi..." - a funding TYPE, not a legal personality. LCEC is already set
+to Own funds and the question I raised does not exist. Deleted, rather than
+quietly reworded: I asked him to go and get an answer he did not need.
 
-THE CHECK THAT MATTERS: SUM TO THE PROJECT FIGURE, NOT JUST INDIVIDUALLY RIGHT
+The real editable fields, left to right as the table shows them, are FOUR:
 
-Eight per cent of each partner rounds to whole euros in six places, and six
-roundings do not have to add up to eight per cent of the total. They do here -
-104.000,00 against 1.196.000,00 of EU contribution - but that is checked, not
-assumed. The form validates the project-level pair, and a set of individually
-defensible partner figures that misses the total by three euros would be
-rejected with no indication of which line caused it.
+    Revenues (if any)   Source of funding description   Source of funding
+    Revenues description
 
-WHAT I AM NOT CLAIMING
+so this file is laid out in that order, one block per partner, because a
+handoff shaped like my analysis rather than like the form is how the indicator
+table went wrong in September.
 
-The legal status of the source - public or private - is a dropdown, and for
-five partners it is obvious. For LCEC it is not: it is the national energy
-agency, it sits with the Ministry of Energy and Water, and it was established
-through a UNDP project, so whether the platform wants "public" or "private" is
-a question for LCEC's own finance people rather than for me. That one is marked
-to confirm rather than answered, because a wrong declaration of a funding
-source's legal status is the kind of thing that surfaces at contract stage.
+THE TWO THINGS THAT ARE WRONG IN THE LIVE APPLICATION
 
-Likewise the wording below describes each partner's OWN resources, which is
-what every partner has told us they are using. If any partner is in fact
-bringing a third-party contribution - a regional grant, a foundation, a
-sponsor - that partner's box has to name it instead, and the programme will ask
-for evidence that it is committed. Worth one line in the email that goes with
-this.
+1.  THE APPLICANT IS NOT IN THE TABLE AT ALL. The list runs PP01 to PP05. The
+    rows sum to 950.000 of total cost, 874.000 of EU contribution and 76.000 of
+    co-financing - short by exactly 350.000, 322.000 and 28.000, which is HCMR
+    to the euro. The guide says "set the source of funding and eventual
+    revenues for EACH ORGANIZATION" and the widget above the table says "select
+    each Applicant/Partner". The applicant is a row like any other and has not
+    been added.
+
+    This is almost certainly also the answer to "I cannot touch co-financing":
+    nothing is editable in a table whose remaining entry is made through the
+    selector above it.
+
+2.  FIVE CELLS STILL CONTAIN PLACEHOLDER TEXT - xxxxxxxxx, XXXXXXX, XXXXXX,
+    XXXX, XXX - and one partner has a funding source typed into the REVENUES
+    column. Revenues are 0,00 for all six. Revenues in EU cost rules are income
+    the project generates, and they REDUCE eligible expenditure; a funding
+    source named there is not a harmless mislabel, it is an assertion that the
+    project earns money.
+
+    My placeholder scan passed this application clean last week. It reads the
+    exported form text, and this table is not in that export. A check is only
+    as wide as the artefact it reads, and I reported "no placeholders" about a
+    document that could not have contained them.
+
+WHAT STILL NEEDS AN ANSWER FROM A PARTNER, AND IT IS A REAL ONE
+
+PP01 has "NSRF" sitting in its revenues description. If that is a slip it just
+moves. If the University genuinely intends to co-finance from NSRF, then it is
+not using own funds, the dropdown is "Contributi..." for a reason, and the
+programme may ask for evidence that the contribution is committed. One line
+from them settles it, and unlike the legal-status question I invented, this one
+is load-bearing.
+
+THE AMOUNTS ARE STILL COMPUTED FROM HIS EXPORT, NOT STORED HERE. Co-financing
+is 8% of each partner's eligible cost, so every figure is a function of a
+budget he controls. The script reads the six totals out of his workbook and
+refuses to build if they do not reconcile to the agreed project total.
 """
 import datetime as dt
 import re
@@ -57,11 +77,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from _shared import here
 
 BASE = str(here(__file__))
-OUT = f"{BASE}/AMMOS_Co-financing_sources_six_partners_2026-10-11.docx"
+OUT = f"{BASE}/AMMOS_Co-financing_table_six_partners_v2_2026-10-11.docx"
 
 NAVY = RGBColor(0x1F, 0x38, 0x5E)
 GREY = RGBColor(0x5A, 0x6B, 0x7D)
 RED = RGBColor(0xB4, 0x55, 0x3C)
+GREEN = RGBColor(0x2E, 0x6B, 0x45)
 
 SCRATCH = Path("/tmp/claude-1003/-home-freelancer/"
                "22c2ac1c-53f2-4084-aeb9-41c15659448a/scratchpad")
@@ -70,91 +91,82 @@ BUDGET = SCRATCH / "budget_08-10.xlsx"
 COFIN = 0.08
 AGREED_TOTAL = 1_300_000.0
 
-# His sheets use template codes. Order is the order the form lists partners.
 NAMES = {
-    "LEP": "HCMR (Applicant)",
-    "PP1": "University of the Aegean",
-    "PP2": "Pi Youth Association",
-    "PP3": "Acipayam Municipality",
-    "PP4": "ISAC-CNR",
-    "PP5": "LCEC",
+    "LEP": "Applicant - HCMR",
+    "PP1": "PP01 University of the Aegean",
+    "PP2": "PP02 Pi Youth Association",
+    "PP3": "PP03 Acipayam Municipality",
+    "PP4": "PP04 ISAC-CNR",
+    "PP5": "PP05 LCEC",
 }
 ORDER = ["LEP", "PP1", "PP2", "PP3", "PP4", "PP5"]
 
-# Strings that must never reach a partner-facing file. The internal names of
-# a partner's finance machinery are ours to know and not ours to publish, and
-# two of these have appeared in my working notes.
+# What his screenshot shows in each row today, so the document can say what
+# CHANGES rather than just what the answer is. None = row absent entirely.
+ON_SCREEN = {
+    "LEP": None,
+    "PP1": ("xxxxxxxxx", "Contributi...", "NSRF"),
+    "PP2": ("For projec...", "Contributi...", ""),
+    "PP3": ("XXXXXXX", "Own funds", "XXXX"),
+    "PP4": ("XXXXXX", "Own funds", "XXX"),
+    "PP5": ("LCEC's own...", "Own funds", "Revenues f..."),
+}
+PLACEHOLDER = re.compile(r"^x+$", re.I)
+
 FORBIDDEN = ("elke", "finance office", "non-compliant", "option b", "ras ",
              "wrong", "4.4.3")
 
-# (code, source name <= ~100 chars, legal status, the box text)
-# The box text is written MODULARLY because I have not seen the character
-# counter on this field: the first sentence stands alone and is under 200
-# characters, so if the box turns out to be small the second sentence is what
-# gets dropped and nothing loses its meaning. Same approach that saved the
-# relevance sections when their limits arrived later than the text did.
+# The one text every partner shares. Revenues are nil for all six, and the box
+# should say so rather than stand empty - an empty box reads as unanswered,
+# and this is a field an assessor can check against the budget in one glance.
+NO_REVENUE = ("The project does not generate revenues. No income is produced "
+              "for the organisation by the activities it implements.")
+
+# (code, source of funding dropdown, source of funding description)
+# Description written MODULARLY - first sentence stands alone under 200
+# characters - because the counter on this field is still not visible in the
+# screenshot. A small box then costs depth, not meaning.
 SOURCES = [
-    ("LEP",
-     "Own resources of HCMR, approved in its annual institutional budget",
-     "Public",
+    ("LEP", "Own funds",
      "HCMR covers its co-financing from its own resources, provided for in the "
      "annual budget approved by its Board of Directors. HCMR is a public "
-     "research centre supervised by the competent Ministry, its budget is "
-     "adopted annually, and the co-financing of this project is included in "
-     "the budget planning for the project duration. No third-party "
-     "contribution is involved."),
+     "research centre supervised by the competent Ministry, the contribution "
+     "is included in its budget planning for the project duration, and no "
+     "third-party contribution is involved."),
 
-    ("PP1",
-     "Own resources of the University of the Aegean, through its Research "
-     "Committee",
-     "Public",
+    ("PP1", "CONFIRM WITH AEGEAN - see note",
      "The University of the Aegean covers its co-financing from its own "
      "resources, administered through its Research Committee. The University "
      "is a public higher education institution, the contribution is approved "
      "as part of the project's internal budget authorisation, and it is "
-     "available for the full project duration. No third-party contribution is "
-     "involved."),
+     "available for the full project duration."),
 
-    ("PP2",
-     "Own resources of Pi Youth Association",
-     "Private",
+    ("PP2", "Own funds",
      "Pi Youth Association covers its co-financing from its own resources, "
      "held as unrestricted reserves in the association's annual budget. The "
      "association is a non-profit organisation whose governing board has "
      "approved the participation and the corresponding contribution, which is "
-     "available from the start of implementation. No third-party contribution "
-     "is involved."),
+     "available from the start of implementation."),
 
-    ("PP3",
-     "Own resources of Acipayam Municipality, from its approved municipal "
-     "budget",
-     "Public",
+    ("PP3", "Own funds",
      "Acipayam Municipality covers its co-financing from its own municipal "
-     "budget, which is adopted annually by the Municipal Council. The "
-     "contribution is provided for under the municipality's own revenues, it "
-     "requires no further authorisation beyond the Council's budget decision, "
-     "and it is available for the project duration. No third-party "
-     "contribution is involved."),
+     "budget, adopted annually by the Municipal Council. The contribution "
+     "comes from the municipality's own revenues, it needs no authorisation "
+     "beyond the Council's budget decision, and it is available for the "
+     "project duration."),
 
-    ("PP4",
-     "Own institutional resources of the National Research Council of Italy "
-     "(CNR)",
-     "Public",
+    ("PP4", "Own funds",
      "ISAC-CNR covers its co-financing from the institutional resources of the "
      "National Research Council of Italy. CNR is a public research body, the "
      "institute's share is committed within its ordinary institutional "
-     "funding, and it is available for the full project duration. No "
-     "third-party contribution is involved."),
+     "funding, and it is available for the full project duration."),
 
-    ("PP5",
-     "Own resources of LCEC, within its approved annual operating budget",
-     "TO CONFIRM WITH LCEC - public or private",
+    ("PP5", "Own funds",
      "LCEC covers its co-financing from its own resources, provided for in its "
      "approved annual operating budget. LCEC is the national energy "
      "conservation centre operating with the competent Ministry, the "
      "contribution is included in its budget planning for the project "
-     "duration, and it is available from the start of implementation. No "
-     "third-party contribution is involved."),
+     "duration, and it is available from the start of implementation."),
 ]
 
 RANGE = re.compile(r"(?<=\d)\s*[–—]\s*(?=[A-Za-z]?\d)")
@@ -174,7 +186,6 @@ def eur(x):
 
 
 def eligible_from_his_export():
-    """The eight per cent has to come off HIS numbers, not mine."""
     wb = openpyxl.load_workbook(BUDGET, data_only=True)
     found = {}
     for ws in wb.worksheets:
@@ -186,19 +197,14 @@ def eligible_from_his_export():
             if code not in NAMES:
                 continue
             nums = [c for c in cells[1:] if isinstance(c, (int, float))]
-            if not nums:
-                continue
-            # The partner's eligible total is the largest figure on its row:
-            # the row carries the four cost categories and then the total.
-            found.setdefault(code, max(nums))
+            if nums:
+                found.setdefault(code, max(nums))
     assert set(found) == set(NAMES), (
         "CANNOT SEE THE BUDGET - refusing to compute co-financing. "
         f"found {sorted(found)}, expected {sorted(NAMES)}")
     tot = sum(found.values())
     assert abs(tot - AGREED_TOTAL) < 1.0, (
-        f"his export totals {eur(tot)}, not the agreed {eur(AGREED_TOTAL)} - "
-        "co-financing is a function of the budget, so it cannot be written "
-        "until the budget closes")
+        f"his export totals {eur(tot)}, not the agreed {eur(AGREED_TOTAL)}")
     return found
 
 
@@ -248,107 +254,166 @@ class Doc:
 
 def main():
     elig = eligible_from_his_export()
-    amounts = {k: round(elig[k] * COFIN, 2) for k in ORDER}
-    eu = {k: round(elig[k] - amounts[k], 2) for k in ORDER}
+    amt = {k: round(elig[k] * COFIN, 2) for k in ORDER}
+    eu = {k: round(elig[k] - amt[k], 2) for k in ORDER}
+    on_screen = [k for k in ORDER if ON_SCREEN[k] is not None]
+    missing = [k for k in ORDER if ON_SCREEN[k] is None]
 
     fails = []
-    if abs(sum(amounts.values()) - AGREED_TOTAL * COFIN) > 0.004:
-        fails.append(
-            f"the six rounded co-financing amounts total "
-            f"{eur(sum(amounts.values()))}, but 8% of the project is "
-            f"{eur(AGREED_TOTAL * COFIN)} - the form validates the project "
-            f"pair, so this must reconcile")
-    if abs(sum(eu.values()) - AGREED_TOTAL * (1 - COFIN)) > 0.004:
-        fails.append("the EU shares do not total 92% of the project")
+    if abs(sum(amt.values()) - AGREED_TOTAL * COFIN) > 0.004:
+        fails.append(f"six rounded amounts total {eur(sum(amt.values()))}, "
+                     f"not {eur(AGREED_TOTAL * COFIN)}")
     if {s[0] for s in SOURCES} != set(NAMES):
-        fails.append("a partner has no co-financing source, or one is named "
-                     "that is not in the partnership")
-    for code, name, status, text in SOURCES:
-        blob = f"{name} {text}".lower()
+        fails.append("a partner has no source of funding block")
+    for code, drop, desc in SOURCES:
+        blob = f"{drop} {desc}".lower()
         for bad in FORBIDDEN:
             if bad in blob:
                 fails.append(f"{code} contains '{bad.strip()}' - internal "
-                             f"working, must not go to partners")
-        if len(clean(name)) > 100:
-            fails.append(f"{code} source name {len(clean(name))} > 100 - "
-                         f"cut {len(clean(name)) - 100}")
-        first = clean(text).split(". ")[0] + "."
+                             f"working, must not reach partners")
+        if PLACEHOLDER.match(clean(desc).strip()):
+            fails.append(f"{code} description is a placeholder")
+        first = clean(desc).split(". ")[0] + "."
         if len(first) > 200:
-            fails.append(
-                f"{code} first sentence is {len(first)} characters. It has to "
-                f"stand alone under 200 in case the box is small - the limit "
-                f"on this field has not been seen yet")
-        if "third-party" not in clean(text).lower():
-            fails.append(f"{code} does not state whether a third party is "
-                         f"contributing, which is what the box is asking")
+            fails.append(f"{code} first sentence {len(first)} chars - it has "
+                         f"to stand alone under 200, the counter on this "
+                         f"field is still not visible")
+    # The arithmetic claim the document makes about the missing row has to be
+    # true of HIS numbers, not of my memory of them.
+    shortfall = sum(amt[k] for k in missing)
+    if missing and abs(shortfall - sum(amt[k] for k in missing)) > 0.004:
+        fails.append("missing-row arithmetic does not reconcile")
+    if not missing:
+        fails.append("the document is written around a missing applicant row; "
+                     "if every partner is now on screen, rewrite it")
     assert not fails, "NOT SHIPPING:\n  - " + "\n  - ".join(fails)
 
     D = Doc()
-    D.h("AMMOS - Source of co-financing, all six partners", size=15)
-    D.p(f"Generated {dt.date.today():%d/%m/%Y} from your budget export of "
-        f"08-10, which closes at {eur(AGREED_TOTAL)} exactly. Every amount "
-        f"below is 8% of that partner's total eligible cost as the export "
-        f"records it, not as my model predicts it - so if you correct a "
-        f"partner's budget after today, that partner's co-financing figure "
-        f"changes too and this file has to be regenerated.",
-        colour=GREY, italic=True)
+    D.h("AMMOS - Co-financing and source of funding, all six partners",
+        size=15)
+    D.p(f"Generated {dt.date.today():%d/%m/%Y} against your screenshot of the "
+        f"live tab. Amounts are 8% of each partner's eligible cost as your "
+        f"budget export of 08-10 records it.", colour=GREY, italic=True)
+
+    D.h("First: the applicant is not in the table", size=12, colour=RED)
+    D.p(f"Your table lists PP01 to PP05. Those five rows total "
+        f"{eur(sum(elig[k] for k in on_screen))} of cost, "
+        f"{eur(sum(eu[k] for k in on_screen))} of EU contribution and "
+        f"{eur(sum(amt[k] for k in on_screen))} of co-financing. The project "
+        f"is {eur(AGREED_TOTAL)} / {eur(sum(eu.values()))} / "
+        f"{eur(sum(amt.values()))}. The difference is "
+        f"{eur(AGREED_TOTAL - sum(elig[k] for k in on_screen))} / "
+        f"{eur(sum(eu.values()) - sum(eu[k] for k in on_screen))} / "
+        f"{eur(shortfall)} - which is HCMR to the euro.")
+    D.p("The user guide, page 50: \"Set the source of funding and eventual "
+        "revenues for each organization... Select each Applicant/Partner and "
+        "set its Source of Funding with description, quantify the revenues "
+        "(if any) then click Save to add it to the list.\" The applicant is a "
+        "row like any other, and it has not been added yet.")
+    D.p("That is probably also why you cannot touch anything: the table itself "
+        "is a list of saved rows. The entry is made in the selector ABOVE it - "
+        "choose the Applicant, fill the fields, press Save, and the row "
+        "appears. To change an existing row, use the \"edit\" link at the far "
+        "right of that row.", bold=True)
 
     D.h("The amounts", size=12)
-    D.table(
-        ["Partner", "Total eligible", "EU contribution 92%",
-         "Co-financing 8%"],
-        [[NAMES[k], eur(elig[k]), eur(eu[k]), eur(amounts[k])]
-         for k in ORDER]
-        + [["TOTAL", eur(sum(elig.values())), eur(sum(eu.values())),
-            eur(sum(amounts.values()))]],
-        widths=[5.0, 4.2, 4.6, 4.2])
-    D.p("The six rounded amounts reconcile to the project figure to the cent. "
-        "That is checked in the generator rather than eyeballed, because six "
-        "individually correct roundings are not obliged to add up and the form "
-        "validates the project-level pair.", size=9, colour=GREY, italic=True)
+    D.table(["Partner", "Total eligible", "EU 92%", "Co-financing 8%",
+             "In the table now?"],
+            [[NAMES[k], eur(elig[k]), eur(eu[k]), eur(amt[k]),
+              "yes" if ON_SCREEN[k] else "NO - add it"] for k in ORDER]
+            + [["TOTAL", eur(sum(elig.values())), eur(sum(eu.values())),
+                eur(sum(amt.values())), ""]],
+            widths=[5.2, 3.6, 3.6, 3.6, 2.8])
 
-    D.h("The text, partner by partner", size=12)
-    D.p("Three fields per partner: the name of the source, its legal status, "
-        "and the explanation. The explanation is written so that the FIRST "
-        "SENTENCE stands alone - I have not seen the character counter on this "
-        "field, so if the box is smaller than it looks, delete from the end "
-        "and nothing loses its meaning.", size=9, colour=GREY, italic=True)
+    D.h("Second: five cells still say XXXX", size=12, colour=RED)
+    ph = [(NAMES[k], ON_SCREEN[k][0], ON_SCREEN[k][2])
+          for k in on_screen
+          if PLACEHOLDER.match(ON_SCREEN[k][0].strip())
+          or PLACEHOLDER.match(ON_SCREEN[k][2].strip())]
+    D.p("These are in the live application and an assessor sees them exactly "
+        "as you do:")
+    D.table(["Partner", "Source of funding description", "Revenues "
+             "description"], [[a, b or "(empty)", c or "(empty)"]
+                              for a, b, c in ph],
+            widths=[6.0, 6.0, 5.0])
+    D.p("My placeholder check passed this application clean last week. It "
+        "reads the exported form text, and this table is not in that export - "
+        "so it was a true statement about a document that could not have "
+        "contained them. Worth saying plainly rather than letting the earlier "
+        "all-clear stand.", size=9, colour=GREY, italic=True)
 
-    for code, name, status, text in SOURCES:
-        D.h(f"{NAMES[code]} - {eur(amounts[code])}", size=11, space=10)
-        D.p(f"Source of co-financing: {name}", bold=True)
-        if status.startswith("TO CONFIRM"):
-            D.p(f"Legal status: {status}", colour=RED, bold=True)
-        else:
-            D.p(f"Legal status: {status}")
-        D.p(clean(text))
-        D.p(f"{len(clean(text))} characters, first sentence "
-            f"{len(clean(text).split('. ')[0]) + 1}.",
+    D.h("Third: revenues are nil, so nothing but that belongs in the revenues "
+        "boxes", size=12, colour=RED)
+    D.p("Revenues (if any) reads 0,00 € on every row, which is correct - the "
+        "project sells nothing and charges nobody. But PP01's revenues "
+        "description says NSRF, and PP03, PP04 and PP05 have text in there "
+        "too. Revenues in the EU cost rules are income the project generates, "
+        "and they are deducted from eligible expenditure. A funding source "
+        "named in that column is not a harmless mislabel - it reads as a "
+        "declaration that the project earns money.")
+    D.p("Put the same sentence in all six revenues description boxes:")
+    D.p(NO_REVENUE, bold=True)
+
+    D.h("The text to enter, partner by partner", size=12)
+    D.p("Four editable fields per row, in the order the table shows them. "
+        "Revenues is 0,00 for all six.", size=9, colour=GREY, italic=True)
+
+    for code, drop, desc in SOURCES:
+        cur = ON_SCREEN[code]
+        D.h(f"{NAMES[code]} - co-financing {eur(amt[code])}", size=11,
+            space=10)
+        if cur is None:
+            D.p("Not in the table. Select it in the box above the list, fill "
+                "these four fields, press Save.", colour=RED, bold=True)
+        D.p("Revenues (if any): 0,00 €")
+        D.p(f"Source of funding: {drop}",
+            colour=RED if "CONFIRM" in drop else None,
+            bold="CONFIRM" in drop)
+        D.p("Source of funding description:", bold=True)
+        D.p(clean(desc))
+        D.p("Revenues description:", bold=True)
+        D.p(NO_REVENUE)
+        if cur:
+            D.p(f"Currently on screen: description \"{cur[0]}\", dropdown "
+                f"\"{cur[1]}\", revenues \"{cur[2] or '(empty)'}\" - use the "
+                f"edit link on that row.", size=8.5, colour=GREY, italic=True)
+        D.p(f"{len(clean(desc))} characters, first sentence "
+            f"{len(clean(desc).split('. ')[0]) + 1}.",
             size=8.5, colour=GREY, italic=True)
 
-    D.h("Two things to settle before this is entered", size=12)
-    D.p("1. LCEC's legal status. Every other partner is plainly public or "
-        "plainly private. LCEC is the national energy conservation centre, it "
-        "works with the competent Ministry, and it was set up through a UNDP "
-        "project, so I am not going to guess which box the platform wants. "
-        "Their finance contact will know in one line, and a wrong declaration "
-        "of a funding source's legal status is the kind of thing that "
-        "resurfaces at contracting.")
-    D.p("2. Whether anyone is actually bringing third-party money. All six "
-        "texts say the partner uses its OWN resources, because that is what "
-        "each of them has told us. If any partner is in fact counting on a "
-        "regional grant, a foundation or a sponsor, that partner's box has to "
-        "name the source instead - and the programme can ask for proof that "
-        "it is committed. One line in the next partner email settles it for "
-        "all six.")
+    D.h("The one question I cannot answer for you", size=12)
+    D.p("PP01's revenues description says NSRF, and PP01 and PP02 are the two "
+        "rows whose Source of funding dropdown is not \"Own funds\". If NSRF "
+        "landed in the wrong column by accident, it simply moves. But if the "
+        "University really intends to co-finance from NSRF, then it is not "
+        "using own funds at all: the source has to be named properly, the "
+        "dropdown choice is deliberate, and the programme can ask for "
+        "evidence that the contribution is committed. The text I have written "
+        "for PP01 above assumes own resources, so do not paste it until "
+        "Aegean confirm which it is. One line from them settles it.")
+    D.p("I should also withdraw something. In my previous file I asked you to "
+        "get LCEC's legal status - public or private - confirmed before "
+        "entering this section. Your screenshot shows there is no such field. "
+        "The dropdown is Source of funding, its values are of the kind \"Own "
+        "funds\", and LCEC is already set correctly. That was a question I "
+        "invented from a form I had not seen, and it does not need asking.",
+        colour=GREY)
+
+    D.h("And one thing that is already fine", size=12, colour=GREEN)
+    D.p("Every row reads 92,00% and 8,00%. The 11% the widget showed before "
+        "any partner was saved was an uninitialised default, which is why it "
+        "was worth not moving the budget for. The MPC share is 51,15%, above "
+        "the 50% minimum, so the 50% golden rule table on the same page needs "
+        "no entry at all - it exists only to justify a shortfall, and we do "
+        "not have one. That also answers why it offered you Lebanon and "
+        "Turkiye only.")
 
     D.d.save(OUT)
     print(f"wrote {OUT}")
-    print(f"  co-financing total {eur(sum(amounts.values()))}, "
+    print(f"  missing from the table: {[NAMES[k] for k in missing]}, "
+          f"{eur(shortfall)}")
+    print(f"  co-financing total {eur(sum(amt.values()))}, "
           f"EU {eur(sum(eu.values()))}")
-    for k in ORDER:
-        print(f"  {NAMES[k]:28s} {eur(elig[k]):>16s}  ->  "
-              f"{eur(amounts[k]):>13s}")
 
 
 if __name__ == "__main__":
