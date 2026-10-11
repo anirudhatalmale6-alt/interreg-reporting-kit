@@ -26,17 +26,27 @@ table went wrong in September.
 
 THE TWO THINGS THAT ARE WRONG IN THE LIVE APPLICATION
 
-1.  THE APPLICANT IS NOT IN THE TABLE AT ALL. The list runs PP01 to PP05. The
-    rows sum to 950.000 of total cost, 874.000 of EU contribution and 76.000 of
-    co-financing - short by exactly 350.000, 322.000 and 28.000, which is HCMR
-    to the euro. The guide says "set the source of funding and eventual
-    revenues for EACH ORGANIZATION" and the widget above the table says "select
-    each Applicant/Partner". The applicant is a row like any other and has not
-    been added.
+1.  THE APPLICANT HAS NO SOURCE OF FUNDING DECLARED. Corrected from the first
+    version of this file, which said the applicant was missing from the table
+    and 28.000 of co-financing with it. His Summary screen shows otherwise: the
+    Applicant row is there, 350.000 / 322.000 / 28.000, and the totals read
+    1.300.000 / 1.196.000 / 104.000. The MONEY is computed from the budget and
+    is correct.
 
-    This is almost certainly also the answer to "I cannot touch co-financing":
-    nothing is editable in a table whose remaining entry is made through the
-    selector above it.
+    What is blank is the applicant's Source of funding dropdown and its
+    description. The guide says "set the source of funding and eventual
+    revenues for EACH ORGANIZATION"; five partners have done it and the
+    applicant has not.
+
+    My arithmetic was right about the EDITABLE list, which does run PP01 to
+    PP05 and does sum 350.000 short. The conclusion I drew from it - that the
+    money was missing - was wrong, because that list is the declaration list
+    and not the budget. Two screens, two different things, and I read the
+    narrower one as if it were the whole picture.
+
+    The entry widget is as described: choose the partner, set source of
+    funding, fill the description, enter revenues, press Save. Nothing is
+    editable in the table itself.
 
 2.  FIVE CELLS STILL CONTAIN PLACEHOLDER TEXT - xxxxxxxxx, XXXXXXX, XXXXXX,
     XXXX, XXX - and one partner has a funding source typed into the REVENUES
@@ -90,6 +100,8 @@ BUDGET = SCRATCH / "budget_08-10.xlsx"
 
 COFIN = 0.08
 AGREED_TOTAL = 1_300_000.0
+# Confirmed from his screenshot of the live widget: 0/500 on both boxes.
+LIM_DESC = 500
 
 NAMES = {
     "LEP": "Applicant - HCMR",
@@ -123,9 +135,10 @@ NO_REVENUE = ("The project does not generate revenues. No income is produced "
               "for the organisation by the activities it implements.")
 
 # (code, source of funding dropdown, source of funding description)
-# Description written MODULARLY - first sentence stands alone under 200
-# characters - because the counter on this field is still not visible in the
-# screenshot. A small box then costs depth, not meaning.
+# 11 Oct, second screenshot: both description boxes show 0/500. The limit is
+# no longer a guess, so it is asserted directly. The modular rule is kept as
+# well - a first sentence that stands alone costs nothing and survives the next
+# form that turns out tighter than this one.
 SOURCES = [
     ("LEP", "Own funds",
      "HCMR covers its co-financing from its own resources, provided for in the "
@@ -273,19 +286,20 @@ def main():
                              f"working, must not reach partners")
         if PLACEHOLDER.match(clean(desc).strip()):
             fails.append(f"{code} description is a placeholder")
+        if len(clean(desc)) > LIM_DESC:
+            fails.append(f"{code} description {len(clean(desc))} > "
+                         f"{LIM_DESC} - cut {len(clean(desc)) - LIM_DESC}")
         first = clean(desc).split(". ")[0] + "."
         if len(first) > 200:
-            fails.append(f"{code} first sentence {len(first)} chars - it has "
-                         f"to stand alone under 200, the counter on this "
-                         f"field is still not visible")
+            fails.append(f"{code} first sentence {len(first)} chars - keep it "
+                         f"standing alone under 200")
     # The arithmetic claim the document makes about the missing row has to be
     # true of HIS numbers, not of my memory of them.
     shortfall = sum(amt[k] for k in missing)
     if missing and abs(shortfall - sum(amt[k] for k in missing)) > 0.004:
         fails.append("missing-row arithmetic does not reconcile")
-    if not missing:
-        fails.append("the document is written around a missing applicant row; "
-                     "if every partner is now on screen, rewrite it")
+    if len(clean(NO_REVENUE)) > LIM_DESC:
+        fails.append("the revenues sentence does not fit 500")
     assert not fails, "NOT SHIPPING:\n  - " + "\n  - ".join(fails)
 
     D = Doc()
@@ -295,26 +309,30 @@ def main():
         f"live tab. Amounts are 8% of each partner's eligible cost as your "
         f"budget export of 08-10 records it.", colour=GREY, italic=True)
 
-    D.h("First: the applicant is not in the table", size=12, colour=RED)
-    D.p(f"Your table lists PP01 to PP05. Those five rows total "
-        f"{eur(sum(elig[k] for k in on_screen))} of cost, "
-        f"{eur(sum(eu[k] for k in on_screen))} of EU contribution and "
-        f"{eur(sum(amt[k] for k in on_screen))} of co-financing. The project "
-        f"is {eur(AGREED_TOTAL)} / {eur(sum(eu.values()))} / "
-        f"{eur(sum(amt.values()))}. The difference is "
-        f"{eur(AGREED_TOTAL - sum(elig[k] for k in on_screen))} / "
-        f"{eur(sum(eu.values()) - sum(eu[k] for k in on_screen))} / "
-        f"{eur(shortfall)} - which is HCMR to the euro.")
-    D.p("The user guide, page 50: \"Set the source of funding and eventual "
-        "revenues for each organization... Select each Applicant/Partner and "
-        "set its Source of Funding with description, quantify the revenues "
-        "(if any) then click Save to add it to the list.\" The applicant is a "
-        "row like any other, and it has not been added yet.")
-    D.p("That is probably also why you cannot touch anything: the table itself "
-        "is a list of saved rows. The entry is made in the selector ABOVE it - "
-        "choose the Applicant, fill the fields, press Save, and the row "
-        "appears. To change an existing row, use the \"edit\" link at the far "
-        "right of that row.", bold=True)
+    D.h("First: the applicant has no source of funding declared", size=12,
+        colour=RED)
+    D.p(f"Your Summary screen shows the money is fine: Applicant "
+        f"{eur(elig['LEP'])} / {eur(eu['LEP'])} / {eur(amt['LEP'])}, and the "
+        f"totals read {eur(AGREED_TOTAL)} / {eur(sum(eu.values()))} / "
+        f"{eur(sum(amt.values()))}. The co-financing amount is computed from "
+        f"the budget and no row has to be created for it to count.")
+    D.p("What is blank is the applicant's Source of funding dropdown and its "
+        "description. The guide, page 50: \"Set the source of funding and "
+        "eventual revenues for EACH ORGANIZATION... Select each "
+        "Applicant/Partner and set its Source of Funding with description, "
+        "quantify the revenues (if any) then click Save to add it to the "
+        "list.\" Five partners have done it. HCMR has not.")
+    D.p("I have to correct myself here. I first told you the applicant was "
+        "missing from the table and 28.000 of co-financing with it. The "
+        "editable list does run PP01 to PP05 and it is 350.000 short - that "
+        "part was right. But that list is the declaration list, not the "
+        "budget, and your Summary tab counts the applicant correctly. I read "
+        "the narrower of two screens as if it were the whole picture.",
+        colour=GREY)
+    D.p("The entry widget is as expected: choose the partner, set Source of "
+        "funding, fill the description, enter revenues, press Save. Nothing "
+        "is editable in the table itself - to change an existing row, use the "
+        "\"edit\" link at its far right.", bold=True)
 
     D.h("The amounts", size=12)
     D.table(["Partner", "Total eligible", "EU 92%", "Co-financing 8%",
@@ -399,14 +417,37 @@ def main():
         "invented from a form I had not seen, and it does not need asking.",
         colour=GREY)
 
-    D.h("And one thing that is already fine", size=12, colour=GREEN)
-    D.p("Every row reads 92,00% and 8,00%. The 11% the widget showed before "
-        "any partner was saved was an uninitialised default, which is why it "
-        "was worth not moving the budget for. The MPC share is 51,15%, above "
-        "the 50% minimum, so the 50% golden rule table on the same page needs "
-        "no entry at all - it exists only to justify a shortfall, and we do "
-        "not have one. That also answers why it offered you Lebanon and "
-        "Turkiye only.")
+    D.h("What the Summary tab settles", size=12, colour=GREEN)
+    D.p("Four things your Summary screenshot answers that were open:")
+    D.p("The co-financing box reads Total eligible 1.300.000,00 / "
+        "Co-financing 104.000,00 / EU Contribution 1.196.000,00 / Total "
+        "revenues 0,00. Every figure matches the agreed budget exactly, and "
+        "every row reads 92,00% and 8,00%. The 11% you saw earlier was an "
+        "uninitialised default before any partner was saved, which is why it "
+        "was worth not moving the budget for it.")
+    D.p(f"Both description boxes show 0/500, so the limit is {LIM_DESC} and "
+        f"no longer a guess. Every text below fits with room to spare - the "
+        f"longest is {max(len(clean(d)) for _, _, d in SOURCES)} characters. "
+        f"The generator now asserts against the real limit.")
+    D.p("Total direct costs for EU partners: 549.950,00 = 47,13%. So the MPC "
+        "partners hold 617.000,00 = 52,87% of direct costs, and 51,15% of "
+        "total eligible cost. Above the minimum on both measures, so the 50% "
+        "golden rule table needs no entry at all - it exists only to justify "
+        "a shortfall and we do not have one. That is also why it was offering "
+        "you Lebanon and Turkiye only.")
+    D.p("Financial capacity shows 100%. If that is saved for all six "
+        "partners, error codes 305, 306 and 307 are already clear and that "
+        "item comes off the list.")
+    D.h("And the one thing on that screen that is not green", size=12,
+        colour=RED)
+    D.p("Every section in your sidebar carries a 100% badge except three: "
+        "Environment, Documents and Submit. Documents we know about - the "
+        "declarations are not uploaded yet. Submit is the last step. But "
+        "ENVIRONMENT is the checklists, and you have filled Checklist A and "
+        "most of B, so it should not be blank. Either that section is not "
+        "metered, or what you entered has not saved. Worth one click to "
+        "check, because Checklist A is error code 008 and it blocks "
+        "submission.")
 
     D.d.save(OUT)
     print(f"wrote {OUT}")
