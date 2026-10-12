@@ -344,7 +344,7 @@ def main():
         "3.4.4 communication": "move a method from the people who wrote it",
         "3.5 sustainability": "costed plans, not aspirational",
         "3.6 cost-effectiveness": "ratio to judge",
-        "3.7 horizontal": "channelling visitors rather than excluding",
+        "3.7 horizontal": "visitor channelling rather than exclusion",
     }
     low = text.lower()
     for label, probe in EXPECT.items():
