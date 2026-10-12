@@ -64,7 +64,34 @@ BASE = str(here(__file__))
 OUT = f"{BASE}/AMMOS_Partnership-associates-cofinancing_GAPS_2026-10-12.docx"
 SCRATCH = Path("/tmp/claude-1003/-home-freelancer/"
                "22c2ac1c-53f2-4084-aeb9-41c15659448a/scratchpad")
-FORM_TXT = SCRATCH / "af1210.txt"
+FORM_DOCX = SCRATCH / "af_1210c.docx"
+FORM_TXT = SCRATCH / "af1210c_dedup.txt"
+
+
+def extract(docx_path, out_path):
+    """Flatten the export to text, printing each MERGED cell once.
+
+    python-docx returns a cell spanning three grid columns three times. The
+    first version of this extraction joined them all, so every merged text
+    box appeared twice on one line - which I then reported to the client as a
+    partner who had pasted paragraphs twice (PIYA, 12 Oct). The tell was a
+    943-character "paragraph" that was exactly the last paragraph, " | ", and
+    the first one: 349 + 3 + 591.
+    """
+    from docx import Document as _D
+    d = _D(docx_path)
+    lines = [p.text.strip() for p in d.paragraphs if p.text.strip()]
+    for t in d.tables:
+        for r in t.rows:
+            seen, cs = set(), []
+            for c in r.cells:
+                if id(c._tc) in seen:
+                    continue
+                seen.add(id(c._tc))
+                cs.append(c.text.strip())
+            if any(cs):
+                lines.append(" | ".join(cs))
+    Path(out_path).write_text("\n".join(lines))
 BUDGET = SCRATCH / "budget_12-10.xlsx"
 
 NAVY = RGBColor(0x1F, 0x38, 0x5E)
@@ -114,6 +141,7 @@ def eur(x):
 
 # ------------------------------------------------------------- read the form
 def partner_blocks():
+    extract(FORM_DOCX, FORM_TXT)
     L = FORM_TXT.read_text().splitlines()
     starts = [i for i, l in enumerate(L)
               if l.startswith("Official name of the organisation in the "
@@ -121,7 +149,18 @@ def partner_blocks():
     assert len(starts) == 6, f"expected 6 partner blocks, found {len(starts)}"
     out = []
     for n, s in enumerate(starts):
-        e = starts[n + 1] if n + 1 < len(starts) else s + 90
+        # The LAST partner has no following "Official name" line, and a fixed
+        # window ran it 90 lines into the 3.3.5 breakdown table, which
+        # repeats every partner's text. That one bug made me report LCEC's
+        # empty box as filled AND PIYA's clean box as duplicated (12 Oct).
+        # End the last block at 3.3.5, and fail if that heading is missing.
+        if n + 1 < len(starts):
+            e = starts[n + 1]
+        else:
+            e = next((i for i in range(s, len(L))
+                      if L[i].startswith("3.3.5")), None)
+            assert e is not None, "3.3.5 heading not found - cannot bound " \
+                                  "the last partner block"
         blk = L[s:e]
         full = blk[0].split("|", 1)[1].strip()
         name = next((v for k, v in SHORT.items() if full.startswith(k[:20])),

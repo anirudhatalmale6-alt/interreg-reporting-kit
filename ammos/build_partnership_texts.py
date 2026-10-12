@@ -181,6 +181,42 @@ ROLE_334 = {
 }
 
 
+# LCEC's whole 3.3.4 box. Facts: Wikipedia "Lebanese Center for Energy
+# Conservation" (national energy agency within the Ministry of Energy and
+# Water; MEW-UNDP project from 2002; independent since 2011; NEEAPs and NREAP)
+# and LCEC's own "EU Projects" list (MEDREG trainings; external technical
+# auditor on an AFD-funded school solarisation project). That list is headed
+# "applications submitted in the last 12 months or about to submit", so the
+# four Interreg NEXT MED titles on it are PROPOSALS and are not claimed as
+# experience. The box also says plainly that the coastal science sits with
+# other partners - the assessor's likely objection, answered before it is made.
+LCEC_334 = [
+    "LCEC is the national energy agency of Lebanon, working within the "
+    "Ministry of Energy and Water. It began in 2002 as a joint initiative of "
+    "the Ministry and UNDP and has been financially and administratively "
+    "independent since 2011.",
+
+    "POLICY THAT GETS ADOPTED. LCEC's core competence is turning technical "
+    "measures into national policy and into decisions public bodies actually "
+    "take. It developed Lebanon's National Energy Efficiency Action Plans and "
+    "its National Renewable Energy Action Plan, and provides technical "
+    "assistance and training to ministries, municipalities and the private "
+    "sector. It also works in Mediterranean cooperation, including training "
+    "with the Mediterranean energy regulators' network MEDREG and as external "
+    "technical auditor of an AFD-funded programme bringing solar energy to "
+    "schools.",
+
+    "IN AMMOS LCEC leads WP6, making it stick: costed management plans, "
+    "adoption decisions, the stewardship committees, the transferability "
+    "guide and the policy recommendations. The coastal science is carried by "
+    "HCMR, CNR and the University of the Aegean. LCEC brings what turns their "
+    "results into adopted plans: the institutional route from a validated "
+    "method to a decision by the authority that owns the site, and policy "
+    "recommendations addressed to national level in Lebanon and in the "
+    "partner countries.",
+]
+
+
 def clean(t):
     return re.sub(r"\s*[–—]\s*", ", ", str(t))
 
@@ -221,11 +257,20 @@ def check():
     if "four technical work packages are led by four different" not in r:
         fails.append("the distribution claim was changed - re-verify it "
                      "against the WP leads before shipping")
+    lc = joined(LCEC_334)
+    if len(lc) > LIM_CAP:
+        fails.append(f"LCEC 3.3.4: {len(lc)} > {LIM_CAP}")
+    if "WP6" not in lc:
+        fails.append("LCEC box does not state its WP6 lead")
+    for bad in ("sharen", "storm", "switch off", "restart"):
+        if bad in lc.lower():
+            fails.append(f"LCEC box cites {bad!r}, which LCEC's own list "
+                         f"describes as an APPLICATION, not experience")
     for k, v in ROLE_334.items():
         if len(v) > 900:
             fails.append(f"{k} role paragraph {len(v)} chars - leaves under "
                          f"1100 for the partner's own record")
-    every = (list(KEY.values()) + HCMR_333 + ROLES_337
+    every = (list(KEY.values()) + HCMR_333 + ROLES_337 + LCEC_334
              + list(ROLE_334.values()))
     for t in every:
         low = t.lower()
@@ -341,8 +386,18 @@ def main():
         D.h(f"{k} - {len(v)} characters, leaves {2000 - len(v) - 2} for "
             f"their own record", size=10.5, space=8)
         D.p(v)
-    D.p("Pi Youth Association and LCEC already have their boxes filled. PIYA "
-        "only needs the duplicated paragraphs removed.", colour=GREY)
+    lc = joined(LCEC_334)
+    D.h(f"5. LCEC - the whole 3.3.4 box - {len(lc)} of 2000", size=12)
+    for p in LCEC_334:
+        D.p(p)
+    D.p("Facts from LCEC's public record and from the project list LCEC sent "
+        "you. That list is headed \"applications submitted in the last 12 "
+        "months or about to submit\", so its four Interreg NEXT MED titles "
+        "are proposals and are deliberately not cited as experience. Please "
+        "let LCEC read it before it goes in.", size=8.5, colour=GREY,
+        italic=True)
+    D.p("Pi Youth Association's box is complete and has no duplicate - my "
+        "earlier report of one was a parsing error on my side.", colour=GREY)
 
     D.d.save(OUT)
     print(f"wrote {OUT}")
