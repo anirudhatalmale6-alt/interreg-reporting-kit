@@ -217,6 +217,38 @@ LCEC_334 = [
 ]
 
 
+# North Aegean Water Directorate, associated. Every competence below is in
+# Presidential Decree 143/2010 (FEK 236/A/27-12-2010), article on the Water
+# Directorate of North Aegean, which the client sent on 12 Oct: RBMPs and
+# programmes of measures, flood hazard and flood risk maps and Flood Risk
+# Management Plans, bathing water quality, the register of protected areas,
+# impact of human activity on water status, public participation in both
+# plans. Seat Mytilene by the decree; the Lemnos water office is from the
+# client's summary of the Directorate's own website. He says the Directorate
+# has no idea what it will do - so NA_ROLE spells it out in three tasks, all
+# inside its statutory work, with no budget and no new obligation.
+NA_EXPERTISE = ("Bathing water quality, protected-areas register, river basin "
+                "and flood risk management plans")
+NA_PAST = (
+    "Statutory water authority for the North Aegean under Presidential Decree "
+    "143/2010, seated in Mytilene with a water office on Lemnos. It prepares "
+    "and implements the region's River Basin Management Plans and Flood Risk "
+    "Management Plans, including flood hazard and risk maps; manages bathing "
+    "water quality; keeps the register of protected areas; assesses the "
+    "impact of human activities on water status; and runs public "
+    "participation in the preparation and review of both plans.")
+NA_ROLE = (
+    "In AMMOS the Directorate (1) shares existing data for the Gomati "
+    "baseline - bathing water quality records, the river basin plan's "
+    "characterisation of the island's coastal waters and the protected-area "
+    "entries; (2) sits, through its Lemnos office, on the Gomati Shore "
+    "Stewardship Committee; and (3) receives the Gomati monitoring results "
+    "and the adopted management plan as input to the next review of the "
+    "river basin and flood risk management plans and their public "
+    "consultation. It has no budget and takes on no obligation beyond its "
+    "statutory work.")
+
+
 def clean(t):
     return re.sub(r"\s*[–—]\s*", ", ", str(t))
 
@@ -257,6 +289,15 @@ def check():
     if "four technical work packages are led by four different" not in r:
         fails.append("the distribution claim was changed - re-verify it "
                      "against the WP leads before shipping")
+    if len(NA_EXPERTISE) > LIM_KEY:
+        fails.append(f"North Aegean expertise {len(NA_EXPERTISE)} > {LIM_KEY}")
+    if len(NA_PAST) > 500:
+        fails.append(f"North Aegean past experience {len(NA_PAST)} > 500")
+    if len(NA_PAST.split(". ")[0]) > 200:
+        fails.append("North Aegean first sentence must stand alone < 200")
+    for must in ("Gomati", "no budget", "statutory"):
+        if must.lower() not in NA_ROLE.lower():
+            fails.append(f"North Aegean role lost {must!r}")
     lc = joined(LCEC_334)
     if len(lc) > LIM_CAP:
         fails.append(f"LCEC 3.3.4: {len(lc)} > {LIM_CAP}")
@@ -270,7 +311,7 @@ def check():
         if len(v) > 900:
             fails.append(f"{k} role paragraph {len(v)} chars - leaves under "
                          f"1100 for the partner's own record")
-    every = (list(KEY.values()) + HCMR_333 + ROLES_337 + LCEC_334
+    every = (list(KEY.values()) + HCMR_333 + ROLES_337 + LCEC_334 + [NA_EXPERTISE, NA_PAST, NA_ROLE]
              + list(ROLE_334.values()))
     for t in every:
         low = t.lower()
@@ -396,6 +437,21 @@ def main():
         "are proposals and are deliberately not cited as experience. Please "
         "let LCEC read it before it goes in.", size=8.5, colour=GREY,
         italic=True)
+    D.h("6. North Aegean Water Directorate - the two associate fields",
+        size=12)
+    D.p(f"Expertise provided to the project ({len(NA_EXPERTISE)}/100):",
+        bold=True)
+    D.p(NA_EXPERTISE)
+    D.p(f"Past experience ({len(NA_PAST)} characters - first sentence stands "
+        f"alone at {len(NA_PAST.split('. ')[0]) + 1} if the box is smaller):",
+        bold=True)
+    D.p(NA_PAST)
+    D.p("What they will actually do - for you to send them, so they know what "
+        "they are signing:", bold=True)
+    D.p(NA_ROLE)
+    D.p("Every competence is from Presidential Decree 143/2010, the article on "
+        "the Water Directorate of North Aegean. The Lemnos office is from your "
+        "summary of their website.", size=8.5, colour=GREY, italic=True)
     D.p("Pi Youth Association's box is complete and has no duplicate - my "
         "earlier report of one was a parsing error on my side.", colour=GREY)
 

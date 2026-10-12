@@ -129,10 +129,16 @@ INDICATORS = [
      "Seven organisations cooperating formally: the six partners - HCMR and "
      "the University of the Aegean in Greece, Pi Youth Association and "
      "Acipayam Municipality in Türkiye, ISAC-CNR in Italy, LCEC in Lebanon - "
-     "plus one associated organisation, the Region of North Aegean. The "
-     "definition counts partners and associated organisations named in the "
-     "application, so the associate is included. Evidenced by the partnership "
-     "agreement and the partner statements."),
+     "plus one associated organisation, the North Aegean Water Directorate "
+     "(Decentralized Administration of the Aegean). The definition counts "
+     "named partners and associates. "
+     "Evidenced by the partnership agreement, partner statements and the "
+     "associate's declaration."),
+    # 12 Oct: this said "the Region of North Aegean". The associate that
+    # signs is the Water Directorate of the Decentralized Administration -
+    # state administration, not the regional self-government. A different
+    # legal body, and the indicator must name the one whose declaration is
+    # uploaded.
 
     ("Expected result", "RCR104",
      "Solutions taken up or up-scaled by organisations", 3,
