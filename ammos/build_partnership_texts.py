@@ -136,7 +136,9 @@ ROLES_337 = [
 
     "ACIPAYAM MUNICIPALITY. The authority for the Ucari pond site, which it "
     "will run after the project. Leads site-manager training in WP5 and takes "
-    "the adoption decision for its own plan in WP6.",
+    "the adoption decision for its own plan in WP6, with Pamukkale "
+    "University's Department of Environmental Engineering advising on the "
+    "pond regime and the site baseline.",
 
     "LCEC. Leads WP6: costed management plans, adoption decisions, "
     "stewardship committees, the transferability guide and policy "
@@ -247,6 +249,21 @@ NA_ROLE = (
     "river basin and flood risk management plans and their public "
     "consultation. It has no budget and takes on no obligation beyond its "
     "statutory work.")
+
+
+# Pamukkale University, Dept of Environmental Engineering - chose "Option B",
+# a local scientific stakeholder, NOT an associate: no declaration, not
+# counted in RCO87. Their draft said "Advisory capacity" (Advisory partner is
+# a formal partner type in this form), a "water quality baseline" (not in our
+# method) and litter monitoring in "WP4/WP5" (it is WP4 only). Rewritten to
+# match the application.
+PAMUKKALE = (
+    "Pamukkale University - Department of Environmental Engineering will "
+    "support AMMOS as a local scientific stakeholder. It will advise Acipayam "
+    "Municipality and the research partners on adapting the capitalised beach "
+    "management guidelines (MMM_IF02) to the freshwater pond regime at the "
+    "Ucari site and on the site's environmental baseline (WP3), and give "
+    "technical guidance on the litter monitoring rounds (WP4).")
 
 
 def clean(t):
