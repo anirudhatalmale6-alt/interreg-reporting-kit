@@ -13,7 +13,8 @@ files and are never mixed. (The ΑΘΗΝΑ folder also carries a stray copy of
 Hatzikosta's 105436 table.)
 
 EVERY CHECK IS AGAINST A DOCUMENT, NOT AN ASSUMPTION:
-  EPIRUSMEDEYE  technical sheet v1.1 (export 96606), procurement tracker v5
+  EPIRUSMEDEYE  technical sheet v1.2 (export 129557, approved 22/06/2026;
+                identical to v1.1 line for line - checked 13 Oct), tracker v5
   MINOR-MED     technical sheet v1.2 (approved 02/09/2026)
 
 Per expense row:
@@ -79,8 +80,8 @@ def code(cat):
 
 # --------------------------------------------------------------- budgets
 def epirus_budget():
-    """Hatzikosta (P2) from technical sheet v1.1, the same parse as before."""
-    wb = openpyxl.load_workbook(ROOT / "1.1-interreg_report96606.xlsx",
+    """Hatzikosta (P2) from technical sheet v1.2 - the approved version."""
+    wb = openpyxl.load_workbook(ROOT / "2-interreg_report129557.xlsx",
                                 data_only=True)
     ws = wb.active
     cur, out = None, {}
