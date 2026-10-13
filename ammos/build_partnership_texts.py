@@ -122,8 +122,7 @@ ROLES_337 = [
     "Provides the scientific coordinator and carries the biological and "
     "ecological method sheets.",
 
-    "ISAC-CNR. The institute behind the source method; its researcher is "
-    "MMM_IF02's first named author. Leads adaptation of the topographic and "
+    "CNR. An AMMIRARE partner and co-author of MMM_IF02, the source method. Leads adaptation of the topographic and "
     "forcings sheets in WP3, so the method is adapted by people who know where "
     "it was designed to stop.",
 
@@ -167,9 +166,7 @@ ROLE_334 = {
         "works on the coasts of the same island region, which is what a "
         "demonstration on Lemnos needs."),
     "ISAC-CNR": (
-        "IN AMMOS ISAC-CNR brings the source method itself. CNR was a partner "
-        "in AMMIRARE, and its researcher is the first named author of MMM_IF02, "
-        "the guidelines AMMOS transfers. It leads adaptation of the "
+        "IN AMMOS CNR brings the source method itself. CNR is a partner in AMMIRARE, and its researchers co-authored MMM_IF02, the guidelines AMMOS transfers. It leads adaptation of the "
         "topographic and meteo-marine forcings sheets in WP3, where knowing why "
         "each procedure was designed as it was decides whether it survives the "
         "move to a dune system, a Lebanese coast and an inland pond."),
@@ -287,13 +284,13 @@ def check():
     if len(r) > LIM_ROLES:
         fails.append(f"3.3.7: {len(r)} > {LIM_ROLES} - cut "
                      f"{len(r) - LIM_ROLES}")
-    for who in ("HCMR", "ISAC-CNR", "AEGEAN", "PI YOUTH", "ACIPAYAM", "LCEC",
+    for who in ("HCMR", "CNR. ", "AEGEAN", "PI YOUTH", "ACIPAYAM", "LCEC",
                 "NORTH AEGEAN"):
         if who not in r:
             fails.append(f"3.3.7 never mentions {who}")
     for org, wps in LEADS.items():
         token = {"PIYA": "PI YOUTH", "Aegean": "UNIVERSITY OF THE AEGEAN",
-                 "CNR": "ISAC-CNR"}.get(org, org).upper()
+                 "CNR": "CNR. "}.get(org, org).upper()
         para = next((p for p in ROLES_337 if p.upper().startswith(token)
                      or token in p.upper()[:40]), "")
         if not para:

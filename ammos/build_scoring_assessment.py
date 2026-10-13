@@ -140,8 +140,7 @@ C = [
     ("3 PARTNERSHIP", "3.1", "Composition and relevance of the partnership",
      4, 3,
      "Six organisations, four countries, every partner leading something it "
-     "would defend in its own name. CNR's researcher is first named author of "
-     "the output we transfer - the FAQ says involving the originating "
+     "would defend in its own name. CNR is an AMMIRARE partner and co-author of the output we transfer - the FAQ says involving the originating "
      "organisation is strongly encouraged.",
      "LCEC. Their project list is nine items and all nine are energy. I have "
      "reframed their role to institutional uptake and policy embedding, which "

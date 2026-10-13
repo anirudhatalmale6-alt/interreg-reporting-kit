@@ -149,10 +149,14 @@ assert len(set(PP.values())) == len(PP), "two partners share a PP number"
 # 65.000 not 68.000 and staff 50.000 not 40.000. The total eligible is
 # unchanged at 80.000, which is exactly why this drifted unnoticed: the
 # headline matched while the composition did not.
+# 13 Oct: PIYA staff 50.000 -> 90.000, external services 155.000 -> 103.000,
+# so direct 215.000 -> 203.000 and eligible unchanged at 230.000. The per-line
+# split was chosen by hand (WP2 and WP5 only) and entered in the platform; the
+# platform export is now the truth for lines, these constants for totals.
 DIRECT = {"HCMR": 297_950.0, "UAEG": 187_000.0, "LCEC": 276_000.0,
-          "PIYA": 215_000.0, "ACIP": 126_000.0, "CNR": 65_000.0}
+          "PIYA": 203_000.0, "ACIP": 126_000.0, "CNR": 65_000.0}
 STAFF = {"HCMR": 173_500.0, "UAEG": 60_000.0, "LCEC": 80_000.0,
-         "PIYA": 50_000.0, "ACIP": 30_000.0, "CNR": 50_000.0}
+         "PIYA": 90_000.0, "ACIP": 30_000.0, "CNR": 50_000.0}
 
 # HAKANSON IS OUT, 01 OCTOBER.
 #
@@ -321,8 +325,9 @@ WPS = [
               "physical characterisation is the bulk of that activity and CNR "
               "owns the sheets it rests on. SHEETS 2.3, 2.4 AND 2.6, "
               "confirmed by CNR on 02 October. "
-              "Dr S. Simeone is the first named author of the MMM_IF02 method "
-              "sheets, and the three CNR carries are the physical ones: 2.3 "
+              "Dr S. Simeone is the first-listed of the six CNR co-authors of "
+              "MMM_IF02 (first author overall: L. Nicoletti, ISPRA), and the "
+              "three CNR carries are the physical ones: 2.3 "
               "topography of the exposed shore including drone "
               "photogrammetry, 2.4 topography of the submerged shore "
               "including the exchange of sediment between the two, and 2.6 "

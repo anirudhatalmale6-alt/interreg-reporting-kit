@@ -116,9 +116,7 @@ S321 = [
     "site reaches a costed management plan, formally adopted by the "
     "responsible authority and overseen by a standing stewardship committee.",
 
-    "WHY IT IS FEASIBLE AND CONTEXT-APPROPRIATE. The organisation that "
-    "produced the source method is a partner, and its first named author "
-    "leads adaptation of the physical sheets. Interventions are demountable, "
+    "WHY IT IS FEASIBLE AND CONTEXT-APPROPRIATE. A co-author of the source method is a partner and leads adaptation of the sheets its researchers wrote. Interventions are demountable, "
     "proportionate beside a protected habitat. "
     "Pilot implementation closes four months before the project does.",
 
@@ -165,8 +163,7 @@ SUMMARY = [
     "formally adopted by the responsible authorities.",
 
     "Six organisations from Greece, Türkiye, Italy and Lebanon deliver it in "
-    "24 months, including the research institute that authored the source "
-    "method. Capacity is built where it has to persist: site-manager training "
+    "24 months, including a research institute that co-authored the source method. Capacity is built where it has to persist: site-manager training "
     "for the staff who will still be there, and school custodian groups at "
     "every site adapted from the same programme's Beach Custodians output.",
 

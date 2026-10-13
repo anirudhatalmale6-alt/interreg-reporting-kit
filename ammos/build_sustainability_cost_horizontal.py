@@ -179,9 +179,7 @@ def s35(F):
             "one component proves impractical; a modular one degrades "
             "gracefully.",
 
-            "AND THE TRANSFER RUNS BETWEEN PEOPLE. The institution that "
-            "authored the source is a partner and leads adaptation of its own "
-            "sheets, so questions are answered by the people who wrote them "
+            "AND THE TRANSFER RUNS BETWEEN PEOPLE. A co-author of the source is a partner and leads adaptation of its own sheets, so questions are answered by the people who wrote them "
             "rather than inferred from a document.",
 
             "TECHNICAL RISK IS NAMED. The main one is platform hosting after "

@@ -348,8 +348,7 @@ MMM_MANDATORY = [
      "IMPLEMENTED: WP3 output 1 decides and translates; WP3 output 2 tests "
      "the adapted method by producing three baselines with it; WP4 "
      "demonstrates it on the ground. ACCESS AND FURTHER DEVELOPMENT: the "
-     "source is a public programme output; CNR, an AMMIRARE partner whose "
-     "researcher is the first named author, is a project partner here and "
+     "source is a public programme output; CNR, an AMMIRARE partner and co-author of the output, is a project partner here and "
      "leads the adaptation of sheets 2.3, 2.4 and 2.6. The adapted method, "
      "the 21 decisions and the cross-typology comparability layer are "
      "submitted back to the MMM database under open licence."),
@@ -611,8 +610,7 @@ def main():
     D.p("One more thing the FAQ gives us free of charge: involving the "
         "organisation that originally developed the output is \"strongly "
         "encouraged\" (5.12) and the developer may be a partner (5.13). CNR "
-        "is an AMMIRARE partner and Dr Simeone is the first named author of "
-        "MMM_IF02. That belongs in this box explicitly, because it answers "
+        "is an AMMIRARE partner and six CNR researchers, Dr Simeone among them, co-authored MMM_IF02. That belongs in this box explicitly, because it answers "
         "the access-and-reuse question in the same sentence as the "
         "encouragement.", size=10)
     D.table(["Output code and name",

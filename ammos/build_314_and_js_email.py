@@ -163,7 +163,7 @@ S314B = [
     "local plans.",
 
     "ACCESS AND FURTHER DEVELOPMENT. The source is public, and "
-    "CNR - an AMMIRARE partner whose researcher is its first named author - "
+    "CNR - an AMMIRARE partner and co-author of the output - "
     "is a partner here, leading adaptation of the topographic and forcings "
     "sheets. The adapted method, the 21 decisions and the comparability layer "
     "return to the MMM database under open licence, each stating the actions "

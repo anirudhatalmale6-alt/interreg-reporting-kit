@@ -75,7 +75,11 @@ AGREED_TOTAL = 1_300_000.0
 AGREED_CC = {
     "LEP": (173_500.0, 30_000.0, 94_450.0, 0.0),
     "PP1": (60_000.0, 8_000.0, 119_000.0, 0.0),
-    "PP2": (50_000.0, 10_000.0, 155_000.0, 0.0),
+    # 13 Oct: PIYA moved 40.000 into staff and took 52.000 out of external
+    # services (flat rates are 30% of staff, so +x staff costs 1.3x). Entered
+    # as four lines: WP5.ST 50.000, WP5.ES 30.168, WP2.ST 23.000, WP2.ES 23.084.
+    # Partner total unchanged at 230.000.
+    "PP2": (90_000.0, 10_000.0, 103_000.0, 0.0),
     "PP3": (30_000.0, 12_000.0, 84_000.0, 0.0),
     "PP4": (50_000.0, 0.0, 15_000.0, 0.0),
     "PP5": (80_000.0, 20_000.0, 176_000.0, 0.0),
